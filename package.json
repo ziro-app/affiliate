@@ -1,0 +1,49 @@
+{
+  "name": "affiliate",
+  "version": "1.0.0",
+  "description": "Affiliate Program",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode=development --open",
+    "build": "webpack --mode=production -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziro-app/affiliate.git"
+  },
+  "keywords": [],
+  "author": "Vitor Barbosa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ziro-app/affiliate/issues"
+  },
+  "homepage": "https://github.com/ziro-app/affiliate#readme",
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "compression-webpack-plugin": "^3.0.1",
+    "copy-webpack-plugin": "^5.1.1",
+    "html-webpack-plugin": "^3.2.0",
+    "raw-loader": "^1.0.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1",
+    "webpack-pwa-manifest": "^4.1.1"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.7.7",
+    "@ziro/capitalize": "^1.0.0",
+    "@ziro/mask-input": "^1.0.0",
+    "axios": "^0.19.0",
+    "firebase": "^7.6.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "webfontloader": "^1.6.28",
+    "wouter": "^2.4.0"
+  }
+}
