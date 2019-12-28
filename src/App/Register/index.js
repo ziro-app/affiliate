@@ -18,13 +18,88 @@ const Register = ({ sendToBackend }) => {
 	const [confirmPass, setConfirmPass] = useState('')
 	const state = { brand, fname, lname, cpf, whats, email, pass, confirmPass,
 		setBrand, setFname, setLname, setCpf, setWhats, setEmail, setPass, setConfirmPass }
+	const validations = [
+		{
+			name: 'email',
+			validation: value => /^\S+@\S+\.\S+$/g.test(value), // tests for pattern a@b.c
+			value: email,
+			message: 'Formato inválido'
+		},
+		{
+			name: 'pass',
+			validation: value => !/^.{0,5}$/g.test(value), // tests for min length of 6 char
+			value: pass,
+			message: 'Mínimo 6 caracteres'
+		}
+	]
 	return (
 		<div style={containerWithPadding}>
 			<HeaderHome linkPath='/login' linkText='Tem cadastro? LOGIN' />
 			<h1 style={welcome}>
-				Crie sua conta<br/>
-				de <span style={marker}>afiliado</span>,
+				Crie sua conta de <span style={marker}>afiliado</span>,
 			</h1>
+			<Form
+				validations={validations}
+				sendToBackend={sendToBackend ? sendToBackend(state) : () => null}
+				inputs={[
+					<FormInput name='brand' label='Marca' input={
+						<InputText
+							value={brand}
+							onChange={({ target: { value } }) => setBrand(value)}
+							placeholder='Marca onde trabalha'
+						/>
+					}/>,
+					<FormInput name='fname' label='Nome' input={
+						<InputText
+							value={fname}
+							onChange={({ target: { value } }) => setFname(value)}
+							placeholder='Seu primeiro nome'
+						/>
+					}/>,
+					<FormInput name='lname' label='Sobrenome' input={
+						<InputText
+							value={lname}
+							onChange={({ target: { value } }) => setLname(value)}
+							placeholder='Seu sobrenome'
+						/>
+					}/>,
+					<FormInput name='cpf' label='CPF' input={
+						<InputText
+							value={cpf}
+							onChange={({ target: { value } }) => setCpf(value)}
+							placeholder='000.111.222-33'
+						/>
+					}/>,
+					<FormInput name='whats' label='Whatsapp' input={
+						<InputText
+							value={whats}
+							onChange={({ target: { value } }) => setWhats(value)}
+							placeholder='(11) 9 1122-3344'
+						/>
+					}/>,
+					<FormInput name='email' label='Email' input={
+						<InputText
+							value={email}
+							onChange={({ target: { value } }) => setEmail(value)}
+							placeholder='Para acesso ao app'
+						/>
+					}/>,
+					<FormInput name='pass' label='Senha' input={
+						<InputText
+							value={pass}
+							onChange={({ target: { value } }) => setPass(value)}
+							placeholder='Mínimo 6 caracteres'
+						/>
+					}/>,
+					<FormInput name='confirmPass' label='Confirme a senha' input={
+						<InputText
+							value={confirmPass}
+							onChange={({ target: { value } }) => setConfirmPass(value)}
+							placeholder='Mínimo 6 caracteres'
+						/>
+					}/>
+				]}
+			/>			
 		</div>
 	)
 }
@@ -34,38 +109,3 @@ Register.propTypes = {
 }
 
 export default Register
-
-	// const validations = [
-	// 	{
-	// 		name: 'email',
-	// 		validation: value => /^\S+@\S+\.\S+$/g.test(value), // tests for pattern a@b.c
-	// 		value: email,
-	// 		message: 'Formato inválido'
-	// 	},
-	// 	{
-	// 		name: 'pass',
-	// 		validation: value => !/^.{0,5}$/g.test(value), // tests for min length of 6 char
-	// 		value: pass,
-	// 		message: 'Mínimo 6 caracteres'
-	// 	}
-	// ]
-		// <Form
-		// 	validations={validations}
-		// 	sendToBackend={sendToBackend ? sendToBackend(state) : () => null}
-		// 	inputs={[
-		// 		<FormInput name='email' label='Email' input={
-		// 			<InputText
-		// 				value={email}
-		// 				onChange={({ target: { value } }) => setEmail(value)}
-		// 				placeholder='Seu email'
-		// 			/>
-		// 		}/>,
-		// 		<FormInput name='pass' label='Senha' input={
-		// 			<InputText
-		// 				value={pass}
-		// 				onChange={({ target: { value } }) => setPass(value)}
-		// 				placeholder='Sua senha'
-		// 			/>
-		// 		}/>
-		// 	]}
-		// />
