@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import maskInput from '@ziro/mask-input'
 import HeaderHome from '@bit/vitorbarbosa19.ziro.header-home'
 import Form from '@bit/vitorbarbosa19.ziro.form'
 import FormInput from '@bit/vitorbarbosa19.ziro.form-input'
@@ -20,16 +21,45 @@ const Register = ({ sendToBackend }) => {
 		setBrand, setFname, setLname, setCpf, setWhats, setEmail, setPass, setConfirmPass }
 	const validations = [
 		{
+			name: 'brand',
+			validation: value => !!value,
+			value: brand,
+			message: 'Marca inválida'
+		},{
+			name: 'fname',
+			validation: value => !!value,
+			value: fname,
+			message: 'Campo obrigatório'
+		},{
+			name: 'lname',
+			validation: value => !!value,
+			value: lname,
+			message: 'Campo obrigatório'
+		},{
+			name: 'cpf',
+			validation: value => value.length >= 14,
+			value: cpf,
+			message: 'Formato inválido'
+		},{
+			name: 'whats',
+			validation: value => value.length >= 14,
+			value: whats,
+			message: 'Formato inválido'
+		},{
 			name: 'email',
 			validation: value => /^\S+@\S+\.\S+$/g.test(value), // tests for pattern a@b.c
 			value: email,
 			message: 'Formato inválido'
-		},
-		{
+		},{
 			name: 'pass',
 			validation: value => !/^.{0,5}$/g.test(value), // tests for min length of 6 char
 			value: pass,
 			message: 'Mínimo 6 caracteres'
+		},{
+			name: 'confirmPass',
+			validation: value => value === pass,
+			value: confirmPass,
+			message: 'Deve ser igual ao campo anterior'
 		}
 	]
 	return (
@@ -66,15 +96,15 @@ const Register = ({ sendToBackend }) => {
 					<FormInput name='cpf' label='CPF' input={
 						<InputText
 							value={cpf}
-							onChange={({ target: { value } }) => setCpf(value)}
+							onChange={({ target: { value } }) => setCpf(maskInput(value, '###.###.###-##', true))}
 							placeholder='000.111.222-33'
 						/>
 					}/>,
 					<FormInput name='whats' label='Whatsapp' input={
 						<InputText
 							value={whats}
-							onChange={({ target: { value } }) => setWhats(value)}
-							placeholder='(11) 9 1122-3344'
+							onChange={({ target: { value } }) => setWhats(maskInput(value, '(##) #####-####', true))}
+							placeholder='(11) 91122-3344'
 						/>
 					}/>,
 					<FormInput name='email' label='Email' input={
