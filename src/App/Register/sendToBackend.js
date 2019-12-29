@@ -8,7 +8,7 @@ const sendToBackend = state => () => {
 		apiResource: 'values',
 		apiMethod: 'append',
 		spreadsheetId: process.env.GOOGLE_API_SHEET,
-		range: 'Test!A1:F1',
+		range: 'Afiliados!A1',
 		resource: {
 			values: [
 				[brand, fname, lname, cpf, whats, email]
@@ -33,7 +33,6 @@ const sendToBackend = state => () => {
 			reject('Erro ao salvar afiliado na planilha')
 		}
 	})
-
 }
 
 export default sendToBackend

@@ -57,7 +57,7 @@ module.exports = (env, { mode }) => {
 				theme_color: '#FFF',
 				display: 'standalone',
 				icons: [{ src: './logo.png', sizes: [96, 128, 192, 256, 384, 512] }]
-			})
+			}),
 			new webpack.DefinePlugin({
 				'process.env': {
 					GOOGLE_API_URL: JSON.stringify(process.env.GOOGLE_API_URL),
