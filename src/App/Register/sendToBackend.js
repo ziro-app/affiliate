@@ -1,3 +1,4 @@
+import { auth, db } from '../../Firebase/index'
 import { post } from 'axios'
 
 const sendToBackend = state => () => {
@@ -25,7 +26,22 @@ const sendToBackend = state => () => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const { data } = await post(url, body, config)
-			console.log(data)
+			try {
+				const { user } = await auth.createUserWithEmailAndPassword(email, pass)
+				try {
+					await db.collection('affiliates').add({
+						user: user.uid, brand, fname, lname, cpf, whats, email
+					})
+				} catch (error) {
+					console.log(error)
+					if (error.response) console.log(error.response)
+					reject('Erro ao salvar na Firestore')
+				}
+			} catch (error) {
+				console.log(error)
+				if (error.response) console.log(error.response)
+				reject('Erro ao criar usuário')
+			}
 			resolve('Você registrou-se como afiliado!')
 		} catch (error) {
 			console.log(error)
