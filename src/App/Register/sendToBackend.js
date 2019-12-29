@@ -39,14 +39,25 @@ const sendToBackend = state => () => {
 				}
 			} catch (error) {
 				console.log(error)
-				if (error.response) console.log(error.response)
+				if (error.code) {
+					switch (error.code) {
+						case 'auth/network-request-failed': throw { msg: 'Sem conexão com a rede', customError: true }
+						case 'auth/invalid-email': throw { msg: 'Email inválido', customError: true }
+						case 'auth/email-already-in-use': throw { msg: 'Email já cadastrado', customError: true }
+						case 'auth/operation-not-allowed': throw { msg: 'Operação não permitida', customError: true }
+						case 'auth/weak-password': throw { msg: 'Senha fraca. Mínimo 6 caracteres', customError: true }
+					}
+				}
 				reject('Erro ao criar usuário')
 			}
 			resolve('Você registrou-se como afiliado!')
 		} catch (error) {
-			console.log(error)
-			if (error.response) console.log(error.response)
-			reject('Erro ao salvar afiliado na planilha')
+			if (error.customError) reject(error)
+			else {
+				console.log(error)
+				if (error.response) console.log(error.response)
+				reject('Erro ao salvar afiliado na planilha')
+			}
 		}
 	})
 }
