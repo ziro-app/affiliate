@@ -57,7 +57,7 @@ const sendToBackend = state => () => {
 				}
 				reject('Erro ao criar usuário')
 			}
-			resolve('Você registrou-se como afiliado!')
+			window.location.replace('/confirmar-email')
 		} catch (error) {
 			if (error.customError) reject(error)
 			else {

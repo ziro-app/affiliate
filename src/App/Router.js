@@ -8,12 +8,13 @@ const Router = () => {
 	const isLogged = false
 	const publicRoutes = {
 		'/login': <Login />,
-		'/cadastrar': <Register />
+		'/cadastrar': <Register />,
+		'/confirmar-email': <div>Confirmar email</div>
 	}
 	const privateRoutes = {
-		'/dashboard': <div>Dashboard</div>
+		'/indicar': <div>Indicação de clientes</div>
 	}
-	const homeRoute = '/dashboard'
+	const homeRoute = '/indicar'
 	return routeMatcher(isLogged, publicRoutes, privateRoutes, homeRoute, <NotFound fallback='/' />)
 }
 
