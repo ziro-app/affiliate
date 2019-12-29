@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import sendToBackend from './sendToBackend'
 import maskInput from '@ziro/mask-input'
 import HeaderHome from '@bit/vitorbarbosa19.ziro.header-home'
 import Form from '@bit/vitorbarbosa19.ziro.form'
@@ -8,7 +8,7 @@ import InputText from '@bit/vitorbarbosa19.ziro.input-text'
 import { containerWithPadding } from '@ziro/theme'
 import { welcome, marker } from './styles'
 
-const Register = ({ sendToBackend }) => {
+const Register = () => {
 	const [brand, setBrand] = useState('') // add support for different branches
 	const [fname, setFname] = useState('')
 	const [lname, setLname] = useState('')
@@ -132,10 +132,6 @@ const Register = ({ sendToBackend }) => {
 			/>			
 		</div>
 	)
-}
-
-Register.propTypes = {
-	sendToBackend: PropTypes.func.isRequired
 }
 
 export default Register
