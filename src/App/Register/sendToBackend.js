@@ -29,13 +29,20 @@ const sendToBackend = state => () => {
 			try {
 				const { user } = await auth.createUserWithEmailAndPassword(email, pass)
 				try {
-					await db.collection('affiliates').add({
-						user: user.uid, brand, fname, lname, cpf, whats, email
-					})
+					await auth.currentUser.sendEmailVerification({ url: `${process.env.CONTINUE_URL}` })
+					try {
+						await db.collection('affiliates').add({
+							user: user.uid, brand, fname, lname, cpf, whats, email
+						})
+					} catch (error) {
+						console.log(error)
+						if (error.response) console.log(error.response)
+						reject('Erro ao salvar na Firestore')
+					}
 				} catch (error) {
 					console.log(error)
 					if (error.response) console.log(error.response)
-					reject('Erro ao salvar na Firestore')
+					reject('Erro ao enviar email de verificação')
 				}
 			} catch (error) {
 				console.log(error)
@@ -63,24 +70,3 @@ const sendToBackend = state => () => {
 }
 
 export default sendToBackend
-
-// if (sellerId instanceof Array && sellerId[1]) {
-// 	const docRef = await db.collection('credit-card-payments').add({
-// 		seller,
-// 		sellerZoopId: sellerId[1],
-// 		charge,
-// 		maxInstallments,
-// 		status: 'Aguardando Pagamento'
-// 	})
-// 	setSeller('')
-// 	setCharge('')
-// 	setMaxInstallments('')
-// 	try {
-// 		const doc = await docRef.get()
-// 		if (doc) await navigator.clipboard.writeText(`${baseUrl}${doc.id}`)
-// 	} catch (error) {
-// 		console.log(error)
-// 		reject('Error in clipboard API')
-// 	}
-// 	resolve('Link copiado')
-// } reject('Seller not found in database')
