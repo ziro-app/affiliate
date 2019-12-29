@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackPwaManifest = require('webpack-pwa-manifest')
+const webpack = require('webpack')
 
 module.exports = (env, { mode }) => {
 	const config = {
@@ -27,8 +28,18 @@ module.exports = (env, { mode }) => {
 		plugins: [ new HtmlWebpackPlugin({ template: './src/index.html' }) ]
 	}
 	if (mode === 'development') {
+		const { google_api_url, google_api_sheet, google_api_token } = require('./credentials')
 		config.devtool = 'cheap-module-eval-source-map'
 		config.devServer = { historyApiFallback: true }
+		config.plugins.push(
+			new webpack.DefinePlugin({
+				'process.env': {
+					GOOGLE_API_URL: JSON.stringify(google_api_url),
+					GOOGLE_API_SHEET: JSON.stringify(google_api_sheet),
+					GOOGLE_API_TOKEN: JSON.stringify(google_api_token)
+				}
+			})
+		)
 	}
 	if (mode === 'production') {
 		config.devtool = 'cheap-module-source-map'
@@ -46,6 +57,13 @@ module.exports = (env, { mode }) => {
 				theme_color: '#FFF',
 				display: 'standalone',
 				icons: [{ src: './logo.png', sizes: [96, 128, 192, 256, 384, 512] }]
+			})
+			new webpack.DefinePlugin({
+				'process.env': {
+					GOOGLE_API_URL: JSON.stringify(process.env.GOOGLE_API_URL),
+					GOOGLE_API_SHEET: JSON.stringify(process.env.GOOGLE_API_SHEET),
+					GOOGLE_API_TOKEN: JSON.stringify(process.env.GOOGLE_API_TOKEN)
+				}
 			})
 		)
 	}

@@ -119,6 +119,7 @@ const Register = () => {
 							value={pass}
 							onChange={({ target: { value } }) => setPass(value)}
 							placeholder='Mínimo 6 caracteres'
+							type='password'
 						/>
 					}/>,
 					<FormInput name='confirmPass' label='Confirme a senha' input={
@@ -126,6 +127,7 @@ const Register = () => {
 							value={confirmPass}
 							onChange={({ target: { value } }) => setConfirmPass(value)}
 							placeholder='Mínimo 6 caracteres'
+							type='password'
 						/>
 					}/>
 				]}
