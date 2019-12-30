@@ -2,6 +2,7 @@ import React from 'react'
 import routeMatcher from '@ziro/router'
 import Login from './Login/index'
 import Register from './Register/index'
+import EmailConfirmation from './EmailConfirmation/index'
 import NotFound from '@bit/vitorbarbosa19.ziro.not-found'
 
 const Router = () => {
@@ -9,7 +10,7 @@ const Router = () => {
 	const publicRoutes = {
 		'/login': <Login />,
 		'/cadastrar': <Register />,
-		'/confirmar-email': <div>Confirmar email</div>
+		'/confirmar-email': <EmailConfirmation />
 	}
 	const privateRoutes = {
 		'/indicar': <div>Indicação de clientes</div>
