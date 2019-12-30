@@ -10,7 +10,7 @@ export const App = () => {
 			if (user && user.emailVerified) {
 				console.log(user)
 				setUser(user)
-			}
+			} else setUser('')
 		})
 	}, [])
 	return (
