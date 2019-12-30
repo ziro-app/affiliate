@@ -5,6 +5,8 @@ import Login from './Login/index'
 import Register from './Register/index'
 import EmailConfirmation from './EmailConfirmation/index'
 import ReferClient from './ReferClient/index'
+import MyAccount from './MyAccount/index'
+import About from './About/index'
 import NotFound from '@bit/vitorbarbosa19.ziro.not-found'
 
 const Router = ({ isLogged }) => {
@@ -14,7 +16,9 @@ const Router = ({ isLogged }) => {
 		'/confirmar-email': <EmailConfirmation />
 	}
 	const privateRoutes = {
-		'/indicar': <ReferClient />
+		'/indicar': <ReferClient />,
+		'/conta': <MyAccount />,
+		'/ziro': <About />
 	}
 	const homeRoute = '/indicar'
 	return routeMatcher(isLogged, publicRoutes, privateRoutes, homeRoute, <NotFound fallback='/' />)
