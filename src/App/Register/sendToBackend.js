@@ -34,6 +34,13 @@ const sendToBackend = state => () => {
 						await db.collection('affiliates').add({
 							user: user.uid, brand, fname, lname, cpf, whats, email
 						})
+						try {
+							await auth.signOut() // user needs to validate email before signing in to app
+						} catch (error) {
+							console.log(error)
+							if (error.response) console.log(error.response)
+							reject('Erro ao fazer signOut')
+						}
 					} catch (error) {
 						console.log(error)
 						if (error.response) console.log(error.response)
@@ -57,7 +64,7 @@ const sendToBackend = state => () => {
 				}
 				reject('Erro ao criar usuário')
 			}
-			window.location.replace('/confirmar-email')
+			window.location.assign('/confirmar-email')
 		} catch (error) {
 			if (error.customError) reject(error)
 			else {

@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.7.7",
-    "@bit/vitorbarbosa19.ziro.confirm-email": "0.0.1",
+    "@bit/vitorbarbosa19.ziro.confirm-email": "0.0.2",
     "@bit/vitorbarbosa19.ziro.error-boundary": "0.0.5",
     "@bit/vitorbarbosa19.ziro.form": "0.0.9",
     "@bit/vitorbarbosa19.ziro.form-input": "0.0.7",
