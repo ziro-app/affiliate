@@ -4,7 +4,11 @@ const sendToBackend = state => () => {
 	const { email, pass } = state
 	return new Promise(async (resolve, reject) => {
 		try {
-			await auth.signInWithEmailAndPassword(email, pass)
+			const { user: { emailVerified } } = await auth.signInWithEmailAndPassword(email, pass)
+			if (!emailVerified) {
+				auth.signOut()
+				reject({ msg: 'Acesse o email de confirmação para logar', customError: true })
+			}
 		} catch (error) {
 			console.log(error)
 			if (error.code) {
