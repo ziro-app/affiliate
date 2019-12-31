@@ -64,7 +64,7 @@ const sendToBackend = state => () => {
 				}
 				reject('Erro ao criar usuário')
 			}
-			window.location.assign('/confirmar-email')
+			// window.location.assign('/confirmar-email')
 		} catch (error) {
 			if (error.customError) reject(error)
 			else {
