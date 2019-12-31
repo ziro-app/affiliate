@@ -1,9 +1,6 @@
 import React from 'react'
-import { Menu } from '../Menu/index'
 
 const MyAccount = () =>
-	<Menu title='Minha Conta'>
-		<div>Minha Conta</div>
-	</Menu>
+	<div>Minha Conta</div>
 
 export default MyAccount

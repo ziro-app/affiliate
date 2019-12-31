@@ -6,7 +6,7 @@ import Form from '@bit/vitorbarbosa19.ziro.form'
 import FormInput from '@bit/vitorbarbosa19.ziro.form-input'
 import InputText from '@bit/vitorbarbosa19.ziro.input-text'
 import { containerWithPadding } from '@ziro/theme'
-import { welcome, marker } from './styles'
+import { welcome, marker, bottom } from './styles'
 
 const Register = () => {
 	const [brand, setBrand] = useState('') // add support for different branches
@@ -131,7 +131,8 @@ const Register = () => {
 						/>
 					}/>
 				]}
-			/>			
+			/>
+			<div style={bottom}></div>
 		</div>
 	)
 }

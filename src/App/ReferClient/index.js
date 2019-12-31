@@ -1,9 +1,6 @@
 import React from 'react'
-import { Menu } from '../Menu/index'
 
 const ReferClient = () =>
-	<Menu title='Indicar Lojista'>
-		<div>Indicar lojista</div>
-	</Menu>
+	<div>Indicar lojista</div>
 
 export default ReferClient
