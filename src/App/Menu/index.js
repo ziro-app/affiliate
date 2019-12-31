@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
-// import { userContext } from '../appContext'
+import { userContext } from '../appContext'
 import { auth } from '../../Firebase/index'
 import Header from  '@bit/vitorbarbosa19.ziro.header'
 import Drawer from '@bit/vitorbarbosa19.ziro.drawer'
@@ -10,14 +10,14 @@ import { containerWithPadding } from '@ziro/theme'
 
 export const Menu = ({ title, children }) => {
 	const [isOpen, setIsOpen] = useState(false)
-	// const { fname, cnpj } = useContext(userContext)
+	const { name, cpf } = useContext(userContext)
 	return (
 		<div style={containerWithPadding}>
 			<Header type='icon' title={title} icon='menu' setIsOpen={() => setIsOpen(true)} />
 			<Drawer isOpen={isOpen} setIsOpen={() => setIsOpen(false)}>
 				<DrawerPanel
-					username={'Vitor' || 'Usuário'}
-					userdata={'CPF: 011.530.885-76' || '-'}
+					username={name || 'Usuário'}
+					userdata={`CPF: ${cpf}` || '-'}
 					options={[
 						{ path: '/indicar',
 						  onClick: () => setIsOpen(false),

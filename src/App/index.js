@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { auth, db } from '../Firebase/index'
+import { userContext } from './appContext'
 import ErrorBoundary from '@bit/vitorbarbosa19.ziro.error-boundary'
 import Router from './Router'
 
@@ -28,9 +29,12 @@ export const App = () => {
 		}
 		getUserData()
 	}, [uid])
+	const userData = { uid, name, cpf }
 	return (
 		<ErrorBoundary>
-			<Router isLogged={!!uid} />
+			<userContext.Provider value={userData}>
+				<Router isLogged={!!uid} />
+			</userContext.Provider>
 		</ErrorBoundary>
 	)
 }
