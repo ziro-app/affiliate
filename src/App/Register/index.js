@@ -17,8 +17,7 @@ const Register = () => {
 	const [email, setEmail] = useState('')
 	const [pass, setPass] = useState('')
 	const [confirmPass, setConfirmPass] = useState('')
-	const state = { brand, fname, lname, cpf, whats, email, pass, confirmPass,
-		setBrand, setFname, setLname, setCpf, setWhats, setEmail, setPass, setConfirmPass }
+	const state = { brand, fname, lname, cpf, whats, email, pass }
 	const validations = [
 		{
 			name: 'brand',

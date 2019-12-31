@@ -2,8 +2,7 @@ import { auth, db } from '../../Firebase/index'
 import { post } from 'axios'
 
 const sendToBackend = state => () => {
-	const { brand, fname, lname, cpf, whats, email, pass, confirmPass,
-		setBrand, setFname, setLname, setCpf, setWhats, setEmail, setPass, setConfirmPass } = state
+	const { brand, fname, lname, cpf, whats, email, pass } = state
 	const url = process.env.GOOGLE_API_URL
 	const body = {
 		apiResource: 'values',
