@@ -39,17 +39,17 @@ const sendToBackend = state => () => {
 						} catch (error) {
 							console.log(error)
 							if (error.response) console.log(error.response)
-							reject('Erro ao fazer signOut')
+							throw 'Erro ao fazer signOut'
 						}
 					} catch (error) {
 						console.log(error)
 						if (error.response) console.log(error.response)
-						reject('Erro ao salvar na Firestore')
+						throw 'Erro ao salvar na Firestore'
 					}
 				} catch (error) {
 					console.log(error)
 					if (error.response) console.log(error.response)
-					reject('Erro ao enviar email de verificação')
+					throw 'Erro ao enviar email de verificação'
 				}
 			} catch (error) {
 				console.log(error)
@@ -62,15 +62,15 @@ const sendToBackend = state => () => {
 						case 'auth/weak-password': throw { msg: 'Senha fraca. Mínimo 6 caracteres', customError: true }
 					}
 				}
-				reject('Erro ao criar usuário')
+				throw 'Erro ao criar usuário'
 			}
-			// window.location.assign('/confirmar-email')
+			window.location.assign('/confirmar-email')
 		} catch (error) {
 			if (error.customError) reject(error)
 			else {
 				console.log(error)
 				if (error.response) console.log(error.response)
-				reject('Erro ao salvar afiliado na planilha')
+				reject(error)
 			}
 		}
 	})
