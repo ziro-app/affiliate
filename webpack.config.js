@@ -28,7 +28,7 @@ module.exports = (env, { mode }) => {
 		plugins: [ new HtmlWebpackPlugin({ template: './src/index.html' }) ]
 	}
 	if (mode === 'development') {
-		const { google_api_url, google_api_sheet, google_api_token, continue_url } = require('./credentials')
+		const { google_api_url, google_api_sheet, google_api_token, continue_url, mapbox_api } = require('./credentials')
 		config.devtool = 'cheap-module-eval-source-map'
 		config.devServer = { historyApiFallback: true }
 		config.plugins.push(
@@ -37,7 +37,8 @@ module.exports = (env, { mode }) => {
 					GOOGLE_API_URL: JSON.stringify(google_api_url),
 					GOOGLE_API_SHEET: JSON.stringify(google_api_sheet),
 					GOOGLE_API_TOKEN: JSON.stringify(google_api_token),
-					CONTINUE_URL: JSON.stringify(continue_url)
+					CONTINUE_URL: JSON.stringify(continue_url),
+					MAPBOX_API: JSON.stringify(mapbox_api)
 				}
 			})
 		)
@@ -64,7 +65,8 @@ module.exports = (env, { mode }) => {
 					GOOGLE_API_URL: JSON.stringify(process.env.GOOGLE_API_URL),
 					GOOGLE_API_SHEET: JSON.stringify(process.env.GOOGLE_API_SHEET),
 					GOOGLE_API_TOKEN: JSON.stringify(process.env.GOOGLE_API_TOKEN),
-					CONTINUE_URL: JSON.stringify(process.env.CONTINUE_URL)
+					CONTINUE_URL: JSON.stringify(process.env.CONTINUE_URL),
+					MAPBOX_API: JSON.stringify(process.env.MAPBOX_API)
 				}
 			})
 		)

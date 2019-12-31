@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.7.7",
+    "@bit/vitorbarbosa19.ziro.about": "0.0.8",
     "@bit/vitorbarbosa19.ziro.confirm-email": "0.0.3",
     "@bit/vitorbarbosa19.ziro.drawer": "0.0.15",
     "@bit/vitorbarbosa19.ziro.drawer-panel": "0.0.15",
