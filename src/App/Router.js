@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import routeMatcher from '@ziro/router'
+import { Menu } from './Menu/index'
 import Login from './Login/index'
 import Register from './Register/index'
 import EmailConfirmation from './EmailConfirmation/index'
@@ -15,10 +16,10 @@ const Router = ({ isLogged }) => {
 		'/cadastrar': <Register />,
 		'/confirmar-email': <EmailConfirmation />
 	}
-	const privateRoutes = {
-		'/indicar': <ReferClient />,
-		'/conta': <MyAccount />,
-		'/ziro': <About />
+	const privateRoutes = { // Menu can't be put inside the components because then it unmounts
+		'/indicar': <Menu title='Indicar'><div>Indicar</div></Menu>,
+		'/conta': <Menu title='Conta'><div>Conta</div></Menu>,
+		'/ziro': <Menu title='Ziro'><div>Ziro</div></Menu>
 	}
 	const homeRoute = '/indicar'
 	return routeMatcher(isLogged, publicRoutes, privateRoutes, homeRoute, <NotFound fallback='/' />)

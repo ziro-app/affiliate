@@ -17,20 +17,20 @@ export const Menu = ({ title, children }) => {
 			<Drawer isOpen={isOpen} setIsOpen={() => setIsOpen(false)}>
 				<DrawerPanel
 					username={'Vitor' || 'Usuário'}
-					usercnpj={'vitorbarbosa19@gmail.com' || '-'}
+					userdata={'CPF: 011.530.885-76' || '-'}
 					options={[
 						{ path: '/indicar',
 						  onClick: () => setIsOpen(false),
-						  icon: <Icon type='truck' size={15} strokeWidth={3} />,
+						  icon: <Icon type='money' size={15} strokeWidth={2} />,
 						  text: 'Indicar Lojista' },
 						{ path: '/conta',
 						  onClick: () => setIsOpen(false),
-						  icon: <Icon type='card' size={15} strokeWidth={3} />,
+						  icon: <Icon type='gear' size={15} strokeWidth={2} />,
 						  text: 'Minha Conta' },
 						{ path: '#',
-						  onClick: () => window.location.assign('https://afiliadas-teste1.now.sh/'),
-						  icon: <Icon type='user' size={15} strokeWidth={3} />,
-						  text: 'Sobre o Programa' },
+						  onClick: () => window.open('https://afiliadas-teste1.now.sh/', '_blank'),
+						  icon: <Icon type='trending' size={15} strokeWidth={3} />,
+						  text: 'Saiba mais' },
 						{ path: '/ziro',
 						  onClick: () => setIsOpen(false),
 						  icon: <Icon type='location' size={15} strokeWidth={3} />,
