@@ -32,7 +32,7 @@ const sendToBackend = state => () => {
 					await auth.currentUser.sendEmailVerification({ url: `${process.env.CONTINUE_URL}` })
 					try {
 						await db.collection('affiliates').add({
-							user: user.uid, brand, fname, lname, cpf, whats, email
+							uid: user.uid, brand, fname, lname, cpf, whats, email
 						})
 						try {
 							await auth.signOut() // user needs to validate email before signing in to app
