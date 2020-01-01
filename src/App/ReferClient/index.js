@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import sendToBackend from './sendToBackend'
 import maskInput from '@ziro/mask-input'
+import capitalize from '@ziro/capitalize'
 import HeaderHome from '@bit/vitorbarbosa19.ziro.header-home'
 import Form from '@bit/vitorbarbosa19.ziro.form'
 import FormInput from '@bit/vitorbarbosa19.ziro.form-input'
@@ -17,15 +18,17 @@ const ReferClient = () => {
 	const [ie, setIe] = useState('')
 	const [razao, setRazao] = useState('')
 	const [fantasia, setFantasia] = useState('')
-	const [endereco, setEndereco] = useState('')
+	const [rua, setRua] = useState('')
+	const [numero, setNumero] = useState('')
+	const [complemento, setComplemento] = useState('')
 	const [bairro, setBairro] = useState('')
 	const [cep, setCep] = useState('')
 	const [cidade, setCidade] = useState('')
 	const [estado, setEstado] = useState('')
 	const [fone, setFone] = useState('')
 	const [email, setEmail] = useState('')
-	const state = { fname, lname, rg, cpf, cnpj, ie, razao, fantasia, endereco, bairro, cep, cidade, estado, fone, email,
-		setFname, setLname, setRg, setCpf, setCnpj, setIe, setRazao, setFantasia, setEndereco, setBairro, setCep, setCidade, setEstado, setFone, setEmail }
+	const state = { fname, lname, rg, cpf, cnpj, ie, razao, fantasia, rua, numero, complemento, bairro, cep, cidade, estado, fone, email,
+		setFname, setLname, setRg, setCpf, setCnpj, setIe, setRazao, setFantasia, setRua, setNumero, setComplemento, setBairro, setCep, setCidade, setEstado, setFone, setEmail }
 	const validations = [
 		{
 			name: 'fname',
@@ -44,12 +47,12 @@ const ReferClient = () => {
 			message: 'Campo obrigatório'
 		},{
 			name: 'cpf',
-			validation: value => value.length >= 14,
+			validation: value => value.length === 14,
 			value: cpf,
 			message: 'Formato inválido'
 		},{
 			name: 'cnpj',
-			validation: value => value.length >= 14, // <---
+			validation: value => value.length === 18,
 			value: cnpj,
 			message: 'Formato inválido'
 		},{
@@ -63,9 +66,24 @@ const ReferClient = () => {
 			value: razao,
 			message: 'Campo obrigatório'
 		},{
-			name: 'endereco',
+			name: 'fantasia',
 			validation: value => !!value,
-			value: endereco,
+			value: fantasia,
+			message: 'Campo obrigatório'
+		},{
+			name: 'rua',
+			validation: value => !!value,
+			value: rua,
+			message: 'Campo obrigatório'
+		},{
+			name: 'numero',
+			validation: value => !!value,
+			value: numero,
+			message: 'Campo obrigatório'
+		},{
+			name: 'complemento',
+			validation: value => !!value,
+			value: complemento,
 			message: 'Campo obrigatório'
 		},{
 			name: 'bairro',
@@ -74,7 +92,7 @@ const ReferClient = () => {
 			message: 'Campo obrigatório'
 		},{
 			name: 'cep',
-			validation: value => !!value, // <---
+			validation: value => value.length === 9,
 			value: cep,
 			message: 'Formato inválido'
 		},{
@@ -84,9 +102,9 @@ const ReferClient = () => {
 			message: 'Campo obrigatório'
 		},{
 			name: 'estado',
-			validation: value => !!value, // <--
+			validation: value => value.length === 2,
 			value: estado,
-			message: 'Campo obrigatório'
+			message: 'Formato inválido'
 		},{
 			name: 'fone',
 			validation: value => value.length >= 14,
@@ -108,15 +126,22 @@ const ReferClient = () => {
 					<FormInput name='fname' label='Nome' input={
 						<InputText
 							value={fname}
-							onChange={({ target: { value } }) => setFname(value)}
-							placeholder='Seu primeiro nome'
+							onChange={({ target: { value } }) => setFname(capitalize(value))}
+							placeholder='Nome do lojista'
 						/>
 					}/>,
 					<FormInput name='lname' label='Sobrenome' input={
 						<InputText
 							value={lname}
-							onChange={({ target: { value } }) => setLname(value)}
-							placeholder='Seu sobrenome'
+							onChange={({ target: { value } }) => setLname(capitalize(value))}
+							placeholder='Sobrenome do lojista'
+						/>
+					}/>,
+					<FormInput name='rg' label='RG' input={
+						<InputText
+							value={rg}
+							onChange={({ target: { value } }) => setRg(maskInput(value, '############', true))}
+							placeholder='00.111.222-3'
 						/>
 					}/>,
 					<FormInput name='cpf' label='CPF' input={
@@ -124,6 +149,83 @@ const ReferClient = () => {
 							value={cpf}
 							onChange={({ target: { value } }) => setCpf(maskInput(value, '###.###.###-##', true))}
 							placeholder='000.111.222-33'
+						/>
+					}/>,
+					<FormInput name='cnpj' label='CNPJ' input={
+						<InputText
+							value={cnpj}
+							onChange={({ target: { value } }) => setCnpj(maskInput(value, '##.###.###/####-##', true))}
+							placeholder='00.111.222/0001-33'
+						/>
+					}/>,
+					<FormInput name='ie' label='Inscrição Estadual' input={
+						<InputText
+							value={ie}
+							onChange={({ target: { value } }) => setIe(maskInput(value, '#############', true))}
+							placeholder='consulte pelo Sintegra'
+						/>
+					}/>,
+					<FormInput name='razao' label='Razão Social' input={
+						<InputText
+							value={razao}
+							onChange={({ target: { value } }) => setRazao(value.toUpperCase())}
+							placeholder='ALMEIDA MODAS LTDA'
+						/>
+					}/>,
+					<FormInput name='fantasia' label='Nome Fantasia' input={
+						<InputText
+							value={fantasia}
+							onChange={({ target: { value } }) => setFantasia(value.toUpperCase())}
+							placeholder='ATELIE DE ROUPAS'
+						/>
+					}/>,
+					<FormInput name='rua' label='Rua' input={
+						<InputText
+							value={rua}
+							onChange={({ target: { value } }) => setRua(value.toUpperCase())}
+							placeholder='R MARECHAL SILVA'
+						/>
+					}/>,
+					<FormInput name='numero' label='Número' input={
+						<InputText
+							value={numero}
+							onChange={({ target: { value } }) => setNumero(value.toUpperCase())}
+							placeholder='117'
+						/>
+					}/>,
+					<FormInput name='complemento' label='Complemento' input={
+						<InputText
+							value={complemento}
+							onChange={({ target: { value } }) => setComplemento(value.toUpperCase())}
+							placeholder='BLOCO K'
+						/>
+					}/>,
+					<FormInput name='bairro' label='Bairro' input={
+						<InputText
+							value={bairro}
+							onChange={({ target: { value } }) => setBairro(value.toUpperCase())}
+							placeholder='LAPA'
+						/>
+					}/>,
+					<FormInput name='cep' label='CEP' input={
+						<InputText
+							value={cep}
+							onChange={({ target: { value } }) => setCep(maskInput(value, '#####-###', true))}
+							placeholder='01123-110'
+						/>
+					}/>,
+					<FormInput name='cidade' label='Cidade' input={
+						<InputText
+							value={cidade}
+							onChange={({ target: { value } }) => setCidade(value.toUpperCase())}
+							placeholder='SÃO PAULO'
+						/>
+					}/>,
+					<FormInput name='estado' label='Estado' input={
+						<InputText
+							value={estado}
+							onChange={({ target: { value } }) => setEstado(maskInput(value, '##', true))}
+							placeholder='SP'
 						/>
 					}/>,
 					<FormInput name='fone' label='Telefone' input={
@@ -137,7 +239,7 @@ const ReferClient = () => {
 						<InputText
 							value={email}
 							onChange={({ target: { value } }) => setEmail(value)}
-							placeholder='joao@gmail.com'
+							placeholder='email@gmail.com'
 						/>
 					}/>
 				]}
