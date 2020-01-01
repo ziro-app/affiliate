@@ -2,11 +2,9 @@ import React, { useState } from 'react'
 import sendToBackend from './sendToBackend'
 import maskInput from '@ziro/mask-input'
 import capitalize from '@ziro/capitalize'
-import HeaderHome from '@bit/vitorbarbosa19.ziro.header-home'
 import Form from '@bit/vitorbarbosa19.ziro.form'
 import FormInput from '@bit/vitorbarbosa19.ziro.form-input'
 import InputText from '@bit/vitorbarbosa19.ziro.input-text'
-import { containerWithPadding } from '@ziro/theme'
 import { bottom } from './styles'
 
 const ReferClient = () => {
@@ -79,11 +77,6 @@ const ReferClient = () => {
 			name: 'numero',
 			validation: value => !!value,
 			value: numero,
-			message: 'Campo obrigatório'
-		},{
-			name: 'complemento',
-			validation: value => !!value,
-			value: complemento,
 			message: 'Campo obrigatório'
 		},{
 			name: 'bairro',
@@ -189,7 +182,7 @@ const ReferClient = () => {
 					<FormInput name='numero' label='Número' input={
 						<InputText
 							value={numero}
-							onChange={({ target: { value } }) => setNumero(value.toUpperCase())}
+							onChange={({ target: { value } }) => setNumero(maskInput(value.toUpperCase(), '######', true))}
 							placeholder='117'
 						/>
 					}/>,
@@ -224,7 +217,7 @@ const ReferClient = () => {
 					<FormInput name='estado' label='Estado' input={
 						<InputText
 							value={estado}
-							onChange={({ target: { value } }) => setEstado(maskInput(value, '##', true))}
+							onChange={({ target: { value } }) => setEstado(maskInput(value.toUpperCase(), '##', false))}
 							placeholder='SP'
 						/>
 					}/>,

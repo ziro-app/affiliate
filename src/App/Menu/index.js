@@ -17,7 +17,7 @@ export const Menu = ({ title, children }) => {
 			<Drawer isOpen={isOpen} setIsOpen={() => setIsOpen(false)}>
 				<DrawerPanel
 					username={name || 'Usuário'}
-					userdata={`CPF: ${cpf}` || '-'}
+					userdata={`CPF: ${cpf || '-'}`}
 					options={[
 						{ path: '/indicar',
 						  onClick: () => setIsOpen(false),
