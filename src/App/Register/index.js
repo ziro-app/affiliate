@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import fetch from './fetch'
 import sendToBackend from './sendToBackend'
 import maskInput from '@ziro/mask-input'
 import HeaderHome from '@bit/vitorbarbosa19.ziro.header-home'
@@ -62,6 +63,7 @@ const Register = () => {
 			message: 'Deve ser igual ao campo anterior'
 		}
 	]
+	useEffect(fetch, [])
 	return (
 		<div style={containerWithPadding}>
 			<HeaderHome linkPath='/login' linkText='Tem cadastro? LOGIN' />

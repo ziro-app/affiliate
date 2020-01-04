@@ -28,15 +28,25 @@ module.exports = (env, { mode }) => {
 		plugins: [ new HtmlWebpackPlugin({ template: './src/index.html' }) ]
 	}
 	if (mode === 'development') {
-		const { google_api_url, google_api_sheet, google_api_token, continue_url, mapbox_api } = require('./credentials')
+		const {
+			sheet_url,
+			sheet_token,
+			sheet_id_register_append,
+			sheet_id_register_get,
+			sheet_id_refer_append,
+			continue_url,
+			mapbox_api
+		} = require('./credentials')
 		config.devtool = 'cheap-module-eval-source-map'
 		config.devServer = { historyApiFallback: true }
 		config.plugins.push(
 			new webpack.DefinePlugin({
 				'process.env': {
-					GOOGLE_API_URL: JSON.stringify(google_api_url),
-					GOOGLE_API_SHEET: JSON.stringify(google_api_sheet),
-					GOOGLE_API_TOKEN: JSON.stringify(google_api_token),
+					SHEET_URL: JSON.stringify(sheet_url),
+					SHEET_TOKEN: JSON.stringify(sheet_token),
+					SHEET_ID_REGISTER_APPEND: JSON.stringify(sheet_id_register_append),
+					SHEET_ID_REGISTER_GET: JSON.stringify(sheet_id_register_get),
+					SHEET_ID_REFER_APPEND: JSON.stringify(sheet_id_refer_append),
 					CONTINUE_URL: JSON.stringify(continue_url),
 					MAPBOX_API: JSON.stringify(mapbox_api)
 				}
@@ -62,9 +72,11 @@ module.exports = (env, { mode }) => {
 			}),
 			new webpack.DefinePlugin({
 				'process.env': {
-					GOOGLE_API_URL: JSON.stringify(process.env.GOOGLE_API_URL),
-					GOOGLE_API_SHEET: JSON.stringify(process.env.GOOGLE_API_SHEET),
-					GOOGLE_API_TOKEN: JSON.stringify(process.env.GOOGLE_API_TOKEN),
+					SHEET_URL: JSON.stringify(process.env.SHEET_URL),
+					SHEET_TOKEN: JSON.stringify(process.env.SHEET_TOKEN),
+					SHEET_ID_REGISTER_APPEND: JSON.stringify(process.env.SHEET_ID_REGISTER_APPEND),
+					SHEET_ID_REGISTER_GET: JSON.stringify(process.env.SHEET_ID_REGISTER_GET),
+					SHEET_ID_REFER_APPEND: JSON.stringify(process.env.SHEET_ID_REFER_APPEND),
 					CONTINUE_URL: JSON.stringify(process.env.CONTINUE_URL),
 					MAPBOX_API: JSON.stringify(process.env.MAPBOX_API)
 				}

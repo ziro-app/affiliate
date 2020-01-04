@@ -3,11 +3,11 @@ import { post } from 'axios'
 
 const sendToBackend = state => () => {
 	const { brand, fname, lname, cpf, whats, email, pass } = state
-	const url = process.env.GOOGLE_API_URL
+	const url = process.env.SHEET_URL
 	const body = {
 		apiResource: 'values',
 		apiMethod: 'append',
-		spreadsheetId: process.env.GOOGLE_API_SHEET,
+		spreadsheetId: process.env.SHEET_ID_REGISTER_APPEND,
 		range: 'Afiliados!A1',
 		resource: {
 			values: [
@@ -19,7 +19,7 @@ const sendToBackend = state => () => {
 	const config = {
 		headers: {
 			'Content-type': 'application/json',
-			'Authorization': process.env.GOOGLE_API_TOKEN
+			'Authorization': process.env.SHEET_TOKEN
 		}
 	}
 	return new Promise(async (resolve, reject) => {
