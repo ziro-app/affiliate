@@ -4,6 +4,7 @@ import maskInput from '@ziro/mask-input'
 import HeaderHome from '@bit/vitorbarbosa19.ziro.header-home'
 import Form from '@bit/vitorbarbosa19.ziro.form'
 import FormInput from '@bit/vitorbarbosa19.ziro.form-input'
+import Dropdown from '@bit/vitorbarbosa19.ziro.dropdown'
 import InputText from '@bit/vitorbarbosa19.ziro.input-text'
 import { containerWithPadding } from '@ziro/theme'
 import { welcome, marker, bottom } from './styles'
@@ -72,10 +73,12 @@ const Register = () => {
 				sendToBackend={sendToBackend ? sendToBackend(state) : () => null}
 				inputs={[
 					<FormInput name='brand' label='Marca' input={
-						<InputText
+						<Dropdown
 							value={brand}
 							onChange={({ target: { value } }) => setBrand(value)}
+							list={['A','B']}
 							placeholder='Marca onde trabalha'
+							onChangeKeyboard={element => element ? setBrand(element.value) : null }
 						/>
 					}/>,
 					<FormInput name='fname' label='Nome' input={
