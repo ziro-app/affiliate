@@ -1,21 +1,21 @@
 import axios from 'axios'
 
-const fetch = () => {
-	const config = {
-		method: 'POST',
-		url: process.env.SHEET_URL,
-		data: {
-			apiResource: 'values',
-			apiMethod: 'get',
-			spreadsheetId: process.env.SHEET_ID_REGISTER_GET,
-			range: 'Dados!W:AJ'
-		},
-		headers: {
-			'Authorization': process.env.SHEET_TOKEN,
-			'Content-Type': 'application/json'
+const fetch = setBrands => {
+	const run = async () => {
+		const config = {
+			method: 'POST',
+			url: process.env.SHEET_URL,
+			data: {
+				apiResource: 'values',
+				apiMethod: 'get',
+				spreadsheetId: process.env.SHEET_ID_REGISTER_GET,
+				range: 'Dados!W:AJ'
+			},
+			headers: {
+				'Authorization': process.env.SHEET_TOKEN,
+				'Content-Type': 'application/json'
+			}
 		}
-	}
-	const runFetch = async () => {
 		try {
 			const { data: { values } } = await axios(config)
 			const [, ...dataWithoutHeaderRow] = values
@@ -28,13 +28,13 @@ const fetch = () => {
 				}
 				return fullAddresses
 			}).flat()
-			console.log(brandsAndAddresses)
+			setBrands(brandsAndAddresses)
 		} catch (error) {
 			if (error.response) console.log(error.response)
 			else console.log(error)
 		}
 	}
-	runFetch()
+	run()
 }
 
 export default fetch

@@ -11,6 +11,8 @@ import { containerWithPadding } from '@ziro/theme'
 import { welcome, marker, bottom } from './styles'
 
 const Register = () => {
+	const [brands, setBrands] = useState([])
+	useEffect(() => fetch(setBrands), [])
 	const [brand, setBrand] = useState('') // add support for different branches
 	const [fname, setFname] = useState('')
 	const [lname, setLname] = useState('')
@@ -63,7 +65,6 @@ const Register = () => {
 			message: 'Deve ser igual ao campo anterior'
 		}
 	]
-	useEffect(fetch, [])
 	return (
 		<div style={containerWithPadding}>
 			<HeaderHome linkPath='/login' linkText='Tem cadastro? LOGIN' />
@@ -78,7 +79,7 @@ const Register = () => {
 						<Dropdown
 							value={brand}
 							onChange={({ target: { value } }) => setBrand(value)}
-							list={['A','B']}
+							list={brands}
 							placeholder='Marca onde trabalha'
 							onChangeKeyboard={element => element ? setBrand(element.value) : null }
 						/>
