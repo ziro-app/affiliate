@@ -13,7 +13,7 @@ import { welcome, marker, bottom } from './styles'
 const Register = () => {
 	const [brands, setBrands] = useState([])
 	useEffect(() => fetch(setBrands), [])
-	const [brand, setBrand] = useState('') // add support for different branches
+	const [brand, setBrand] = useState('')
 	const [fname, setFname] = useState('')
 	const [lname, setLname] = useState('')
 	const [cpf, setCpf] = useState('')
