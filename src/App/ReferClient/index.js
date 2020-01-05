@@ -13,6 +13,8 @@ const ReferClient = () => {
 	const [lname, setLname] = useState('')
 	const [rg, setRg] = useState('')
 	const [cpf, setCpf] = useState('')
+	const [birth, setBirth] = useState('')
+	const [insta, setInsta] = useState('')
 	const [cnpj, setCnpj] = useState('')
 	const [ie, setIe] = useState('')
 	const [razao, setRazao] = useState('')
@@ -27,9 +29,10 @@ const ReferClient = () => {
 	const [fone, setFone] = useState('')
 	const [email, setEmail] = useState('')
 	const { name: affiliateName, cpf: affiliateCpf } = useContext(userContext)
-	const state = { affiliateName, affiliateCpf, fname, lname, rg, cpf, cnpj, ie, razao, fantasia, rua, numero,
-		complemento, bairro, cep, cidade, estado, fone, email, setFname, setLname, setRg, setCpf, setCnpj, setIe,
-		setRazao, setFantasia, setRua, setNumero, setComplemento, setBairro, setCep, setCidade, setEstado, setFone, setEmail }
+	const state = { affiliateName, affiliateCpf, fname, lname, rg, cpf, birth, insta, cnpj, ie, razao, fantasia,
+		rua, numero, complemento, bairro, cep, cidade, estado, fone, email, setFname, setLname, setRg, setCpf,
+		setBirth, setInsta, setCnpj, setIe, setRazao, setFantasia, setRua, setNumero, setComplemento, setBairro,
+		setCep, setCidade, setEstado, setFone, setEmail }
 	const validations = [
 		{
 			name: 'fname',
@@ -50,6 +53,11 @@ const ReferClient = () => {
 			name: 'cpf',
 			validation: value => value.length === 14,
 			value: cpf,
+			message: 'Formato inválido'
+		},{
+			name: 'birth',
+			validation: value => value.length === 10,
+			value: birth,
 			message: 'Formato inválido'
 		},{
 			name: 'cnpj',
@@ -145,6 +153,20 @@ const ReferClient = () => {
 							value={cpf}
 							onChange={({ target: { value } }) => setCpf(maskInput(value, '###.###.###-##', true))}
 							placeholder='000.111.222-33'
+						/>
+					}/>,
+					<FormInput name='birth' label='Nascimento' input={
+						<InputText
+							value={birth}
+							onChange={({ target: { value } }) => setBirth(maskInput(value, '##/##/####', true))}
+							placeholder='01/01/1990'
+						/>
+					}/>,
+					<FormInput name='insta' label='Instagram' input={
+						<InputText
+							value={insta}
+							onChange={({ target: { value } }) => setInsta(value)}
+							placeholder='Ex.: ateliederoupas. Não use .com'
 						/>
 					}/>,
 					<FormInput name='cnpj' label='CNPJ' input={
