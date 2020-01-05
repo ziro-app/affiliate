@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { userContext } from '../appContext'
 import sendToBackend from './sendToBackend'
 import maskInput from '@ziro/mask-input'
 import capitalize from '@ziro/capitalize'
@@ -25,8 +26,10 @@ const ReferClient = () => {
 	const [estado, setEstado] = useState('')
 	const [fone, setFone] = useState('')
 	const [email, setEmail] = useState('')
-	const state = { fname, lname, rg, cpf, cnpj, ie, razao, fantasia, rua, numero, complemento, bairro, cep, cidade, estado, fone, email,
-		setFname, setLname, setRg, setCpf, setCnpj, setIe, setRazao, setFantasia, setRua, setNumero, setComplemento, setBairro, setCep, setCidade, setEstado, setFone, setEmail }
+	const { name: affiliateName, cpf: affiliateCpf } = useContext(userContext)
+	const state = { affiliateName, affiliateCpf, fname, lname, rg, cpf, cnpj, ie, razao, fantasia, rua, numero,
+		complemento, bairro, cep, cidade, estado, fone, email, setFname, setLname, setRg, setCpf, setCnpj, setIe,
+		setRazao, setFantasia, setRua, setNumero, setComplemento, setBairro, setCep, setCidade, setEstado, setFone, setEmail }
 	const validations = [
 		{
 			name: 'fname',

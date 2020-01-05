@@ -25,7 +25,7 @@ const sendToBackend = state => () => {
 	}
 	return new Promise(async (resolve, reject) => {
 		try {
-			const { data } = await post(url, body, config)
+			await post(url, body, config)
 			try {
 				const { user } = await auth.createUserWithEmailAndPassword(email, pass)
 				try {
