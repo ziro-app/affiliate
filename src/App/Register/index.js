@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import fetch from './fetch'
 import sendToBackend from './sendToBackend'
 import maskInput from '@ziro/mask-input'
+import capitalize from '@ziro/capitalize'
 import HeaderHome from '@bit/vitorbarbosa19.ziro.header-home'
 import Form from '@bit/vitorbarbosa19.ziro.form'
 import FormInput from '@bit/vitorbarbosa19.ziro.form-input'
@@ -87,14 +88,14 @@ const Register = () => {
 					<FormInput name='fname' label='Nome' input={
 						<InputText
 							value={fname}
-							onChange={({ target: { value } }) => setFname(value)}
+							onChange={({ target: { value } }) => setFname(capitalize(value))}
 							placeholder='Seu primeiro nome'
 						/>
 					}/>,
 					<FormInput name='lname' label='Sobrenome' input={
 						<InputText
 							value={lname}
-							onChange={({ target: { value } }) => setLname(value)}
+							onChange={({ target: { value } }) => setLname(capitalize(value))}
 							placeholder='Seu sobrenome'
 						/>
 					}/>,
