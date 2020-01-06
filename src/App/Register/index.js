@@ -15,6 +15,7 @@ const Register = () => {
 	const [brands, setBrands] = useState([])
 	useEffect(() => fetch(setBrands), [])
 	const [brand, setBrand] = useState('')
+	const [insta, setInsta] = useState('')
 	const [fname, setFname] = useState('')
 	const [lname, setLname] = useState('')
 	const [cpf, setCpf] = useState('')
@@ -22,7 +23,7 @@ const Register = () => {
 	const [email, setEmail] = useState('')
 	const [pass, setPass] = useState('')
 	const [confirmPass, setConfirmPass] = useState('')
-	const state = { brand, fname, lname, cpf, whats, email, pass }
+	const state = { brand, insta, fname, lname, cpf, whats, email, pass }
 	const validations = [
 		{
 			name: 'brand',
@@ -83,6 +84,13 @@ const Register = () => {
 							list={brands}
 							placeholder='Marca onde trabalha'
 							onChangeKeyboard={element => element ? setBrand(element.value) : null }
+						/>
+					}/>,
+					<FormInput name='insta' label='Instagram da Marca' input={
+						<InputText
+							value={insta}
+							onChange={({ target: { value } }) => setInsta(value)}
+							placeholder='Ex.: ateliederoupas. Não use .com'
 						/>
 					}/>,
 					<FormInput name='fname' label='Nome' input={

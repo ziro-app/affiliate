@@ -2,7 +2,7 @@ import { auth, db } from '../../Firebase/index'
 import { post } from 'axios'
 
 const sendToBackend = state => () => {
-	const { brand, fname, lname, cpf, whats, email, pass } = state
+	const { brand, insta, fname, lname, cpf, whats, email, pass } = state
 	const [brandName, branch] = brand.split(' - ')
 	const url = process.env.SHEET_URL
 	const body = {
@@ -12,7 +12,7 @@ const sendToBackend = state => () => {
 		range: 'Afiliados!A1',
 		resource: {
 			values: [
-				[brandName, branch, fname, lname, cpf, whats, email]
+				[brandName, branch, insta, fname, lname, cpf, whats, email]
 			]
 		},
 		valueInputOption: 'raw'
@@ -32,7 +32,7 @@ const sendToBackend = state => () => {
 					await auth.currentUser.sendEmailVerification({ url: `${process.env.CONTINUE_URL}` })
 					try {
 						await db.collection('affiliates').add({
-							uid: user.uid, brand: brandName, branch, fname, lname, cpf, whats, email
+							uid: user.uid, brand: brandName, branch, insta, fname, lname, cpf, whats, email
 						})
 						try {
 							await auth.signOut() // user needs to validate email before signing in to app
