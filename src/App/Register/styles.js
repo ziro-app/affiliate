@@ -13,5 +13,5 @@ marker = {
 
 bottom = {
 	display: 'grid',
-	marginBottom: '30px'
+	marginBottom: '60px'
 }

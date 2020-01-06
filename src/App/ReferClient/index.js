@@ -6,7 +6,7 @@ import capitalize from '@ziro/capitalize'
 import Form from '@bit/vitorbarbosa19.ziro.form'
 import FormInput from '@bit/vitorbarbosa19.ziro.form-input'
 import InputText from '@bit/vitorbarbosa19.ziro.input-text'
-import { bottom } from './styles'
+import Footer from '@bit/vitorbarbosa19.ziro.footer'
 
 const ReferClient = () => {
 	const [fname, setFname] = useState('')
@@ -64,11 +64,6 @@ const ReferClient = () => {
 			validation: value => value.length === 18,
 			value: cnpj,
 			message: 'Formato inválido'
-		},{
-			name: 'ie',
-			validation: value => !!value,
-			value: ie,
-			message: 'Campo obrigatório'
 		},{
 			name: 'razao',
 			validation: value => !!value,
@@ -262,7 +257,7 @@ const ReferClient = () => {
 					}/>
 				]}
 			/>
-			<div style={bottom}></div>
+			<Footer phone='+55 (11) 3334-0920' />
 		</>
 	)
 }
