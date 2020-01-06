@@ -28,7 +28,7 @@ export const Menu = ({ title, children }) => {
 						  icon: <Icon type='gear' size={15} strokeWidth={2} />,
 						  text: 'Minha Conta' },
 						{ path: '#',
-						  onClick: () => window.open('https://afiliadas-teste1.now.sh/', '_blank'),
+						  onClick: () => window.open('https://parceria.ziro.app', '_blank'),
 						  icon: <Icon type='trending' size={15} strokeWidth={3} />,
 						  text: 'Saiba mais' },
 						{ path: '/ziro',
