@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { auth, db } from '../Firebase/index'
 import { userContext } from './appContext'
+import InitialLoader from '@bit/vitorbarbosa19.ziro.initial-loader'
 import ErrorBoundary from '@bit/vitorbarbosa19.ziro.error-boundary'
 import Router from './Router'
 
 export const App = () => {
+	const [loading, setLoading] = useState(true)
 	const [errorLoading, setErrorLoading] = useState(false)
-	const [uid, setUid] = useState('')
+	const [uid, setUid] = useState(null)
 	const [name, setName] = useState('')
 	const [cpf, setCpf] = useState('')
 	useEffect(() => {
@@ -33,10 +35,12 @@ export const App = () => {
 					setErrorLoading(true)	
 				}
 			}
+			if (uid !== null) setLoading(false) // wait uid to be set to either a value or ''
 		}
 		getUserData()
 	}, [uid])
 	const userData = { uid, name, cpf }
+	if (loading) return <InitialLoader />
 	if (errorLoading) return <div>Erro na página. Tente novamente ou solicite suporte</div>
 	return (
 		<ErrorBoundary>
