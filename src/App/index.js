@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { auth, db } from '../Firebase/index'
 import { userContext } from './appContext'
 import InitialLoader from '@bit/vitorbarbosa19.ziro.initial-loader'
+import Error from '@bit/vitorbarbosa19.ziro.error'
 import ErrorBoundary from '@bit/vitorbarbosa19.ziro.error-boundary'
 import Router from './Router'
 
@@ -41,7 +42,7 @@ export const App = () => {
 	}, [uid])
 	const userData = { uid, name, cpf }
 	if (loading) return <InitialLoader />
-	if (errorLoading) return <div>Erro na página. Tente novamente ou solicite suporte</div>
+	if (errorLoading) return <Error />
 	return (
 		<ErrorBoundary>
 			<userContext.Provider value={userData}>
