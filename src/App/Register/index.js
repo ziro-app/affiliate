@@ -13,8 +13,10 @@ import { welcome, marker, bottom } from './styles'
 
 const Register = () => {
 	const [brands, setBrands] = useState([])
-	useEffect(() => fetch(setBrands), [])
+	const [branches, setBranches] = useState([])
+	useEffect(() => fetch(setBrands, setBranches), [])
 	const [brand, setBrand] = useState('')
+	const [branch, setBranch] = useState('')
 	const [insta, setInsta] = useState('')
 	const [fname, setFname] = useState('')
 	const [lname, setLname] = useState('')
@@ -23,13 +25,18 @@ const Register = () => {
 	const [email, setEmail] = useState('')
 	const [pass, setPass] = useState('')
 	const [confirmPass, setConfirmPass] = useState('')
-	const state = { brand, insta, fname, lname, cpf, whats, email, pass }
+	const state = { brand, branch, insta, fname, lname, cpf, whats, email, pass }
 	const validations = [
 		{
 			name: 'brand',
 			validation: value => !!value,
 			value: brand,
 			message: 'Marca inválida'
+		},{
+			name: 'branch',
+			validation: value => !!value,
+			value: branch,
+			message: 'Unidade inválida'
 		},{
 			name: 'fname',
 			validation: value => !!value,
@@ -86,11 +93,20 @@ const Register = () => {
 							onChangeKeyboard={element => element ? setBrand(element.value) : null }
 						/>
 					}/>,
+					<FormInput name='branch' label='Unidade da Marca' input={
+						<Dropdown
+							value={branch}
+							onChange={({ target: { value } }) => setBranch(value)}
+							list={branches}
+							placeholder='Unidade/endereço da marca'
+							onChangeKeyboard={element => element ? setBranch(element.value) : null }
+						/>
+					}/>,
 					<FormInput name='insta' label='Instagram da Marca' input={
 						<InputText
 							value={insta}
 							onChange={({ target: { value } }) => setInsta(value)}
-							placeholder='Ex.: ateliederoupas. Não use .com'
+							placeholder='Ex.: ateliederoupa. Não use .com'
 						/>
 					}/>,
 					<FormInput name='fname' label='Nome' input={

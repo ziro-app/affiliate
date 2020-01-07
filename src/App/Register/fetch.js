@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const fetch = setBrands => {
+const fetch = (setBrands, setBranches) => {
 	const run = async () => {
 		const config = {
 			method: 'POST',
@@ -19,7 +19,11 @@ const fetch = setBrands => {
 		try {
 			const { data: { values } } = await axios(config)
 			const [, ...dataWithoutHeaderRow] = values
-			const brandsAndAddresses = dataWithoutHeaderRow.map(value => {
+			const brands = dataWithoutHeaderRow.map(value => {
+				const [brand, ...rest] = value
+				return brand
+			})
+			const branches = dataWithoutHeaderRow.map(value => {
 				const [brand, , ...addresses] = value
 				let fullAddresses = []
 				for (let i = 0; i < addresses.length; i++) {
@@ -28,7 +32,9 @@ const fetch = setBrands => {
 				}
 				return fullAddresses
 			}).flat()
-			setBrands(brandsAndAddresses)
+			console.log(branches)
+			setBrands(brands)
+			setBranches(branches)
 		} catch (error) {
 			if (error.response) console.log(error.response)
 			else console.log(error)

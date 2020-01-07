@@ -161,7 +161,7 @@ const ReferClient = () => {
 						<InputText
 							value={insta}
 							onChange={({ target: { value } }) => setInsta(value)}
-							placeholder='Ex.: ateliederoupas. Não use .com'
+							placeholder='Ex.: ateliederoupa. Não use .com'
 						/>
 					}/>,
 					<FormInput name='cnpj' label='CNPJ' input={
