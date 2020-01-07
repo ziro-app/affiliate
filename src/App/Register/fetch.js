@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const fetch = (setIsLoading, setBrands, setBrandsAndBranches) => {
+const fetch = (setIsLoading, setIsError, setBrands, setBrandsAndBranches) => {
 	const source = axios.CancelToken.source()
 	const run = async () => {
 		const config = {
@@ -40,6 +40,7 @@ const fetch = (setIsLoading, setBrands, setBrandsAndBranches) => {
 		} catch (error) {
 			if (error.response) console.log(error.response)
 			else console.log(error)
+			setIsError(true)
 			setIsLoading(false)
 		}
 	}

@@ -4,6 +4,7 @@ import sendToBackend from './sendToBackend'
 import maskInput from '@ziro/mask-input'
 import capitalize from '@ziro/capitalize'
 import InitialLoader from '@bit/vitorbarbosa19.ziro.initial-loader'
+import Error from '@bit/vitorbarbosa19.ziro.error'
 import HeaderHome from '@bit/vitorbarbosa19.ziro.header-home'
 import Form from '@bit/vitorbarbosa19.ziro.form'
 import FormInput from '@bit/vitorbarbosa19.ziro.form-input'
@@ -14,6 +15,7 @@ import { welcome, marker, bottom } from './styles'
 
 const Register = () => {
 	const [isLoading, setIsLoading] = useState(true)
+	const [isError, setIsError] = useState(false)
 	// dropdown options
 	const [brandsAndBranches, setBrandsAndBranches] = useState([])
 	const [brands, setBrands] = useState([])
@@ -30,7 +32,7 @@ const Register = () => {
 	const [pass, setPass] = useState('')
 	const [confirmPass, setConfirmPass] = useState('')
 	const state = { brand, branch, insta, fname, lname, cpf, whats, email, pass }
-	useEffect(() => fetch(setIsLoading, setBrands, setBrandsAndBranches), [])
+	useEffect(() => fetch(setIsLoading, setIsError, setBrands, setBrandsAndBranches), [])
 	useEffect(() => {
 		setBranch('')
 		setBranches(brandsAndBranches
@@ -86,6 +88,7 @@ const Register = () => {
 		}
 	]
 	if (isLoading) return <InitialLoader />
+	if (isError) return <Error />
 	return (
 		<div style={containerWithPadding}>
 			<HeaderHome linkPath='/login' linkText='Tem cadastro? LOGIN' />
