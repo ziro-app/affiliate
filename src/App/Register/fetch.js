@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const fetch = (setBrands, setBrandsAndBranches) => {
+	const source = axios.CancelToken.source()
 	const run = async () => {
 		const config = {
 			method: 'POST',
@@ -14,7 +15,8 @@ const fetch = (setBrands, setBrandsAndBranches) => {
 			headers: {
 				'Authorization': process.env.SHEET_TOKEN,
 				'Content-Type': 'application/json'
-			}
+			},
+			cancelToken: source.token
 		}
 		try {
 			const { data: { values } } = await axios(config)
@@ -40,6 +42,7 @@ const fetch = (setBrands, setBrandsAndBranches) => {
 		}
 	}
 	run()
+	return () => source.cancel('Canceled fetch request. Component unmounted')
 }
 
 export default fetch
