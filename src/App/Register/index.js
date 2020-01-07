@@ -12,9 +12,11 @@ import { containerWithPadding } from '@ziro/theme'
 import { welcome, marker, bottom } from './styles'
 
 const Register = () => {
+	// dropdown options
+	const [brandsAndBranches, setBrandsAndBranches] = useState([])
 	const [brands, setBrands] = useState([])
 	const [branches, setBranches] = useState([])
-	useEffect(() => fetch(setBrands, setBranches), [])
+	// form fields
 	const [brand, setBrand] = useState('')
 	const [branch, setBranch] = useState('')
 	const [insta, setInsta] = useState('')
@@ -26,6 +28,13 @@ const Register = () => {
 	const [pass, setPass] = useState('')
 	const [confirmPass, setConfirmPass] = useState('')
 	const state = { brand, branch, insta, fname, lname, cpf, whats, email, pass }
+	useEffect(() => fetch(setBrands, setBrandsAndBranches), [])
+	useEffect(() => {
+		setBranch('')
+		setBranches(brandsAndBranches
+			.filter(value => value.split(' - ')[0] === brand)
+			.map(value => value.split(' - ')[1].replace('Bom Retiro','B. Retiro')))
+	}, [brand])
 	const validations = [
 		{
 			name: 'brand',
@@ -97,7 +106,7 @@ const Register = () => {
 						<Dropdown
 							value={branch}
 							onChange={({ target: { value } }) => setBranch(value)}
-							list={branches}
+							list={branches || ['Escolha uma marca acima']}
 							placeholder='Unidade/endereço da marca'
 							onChangeKeyboard={element => element ? setBranch(element.value) : null }
 						/>

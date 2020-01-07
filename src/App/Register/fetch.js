@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const fetch = (setBrands, setBranches) => {
+const fetch = (setBrands, setBrandsAndBranches) => {
 	const run = async () => {
 		const config = {
 			method: 'POST',
@@ -32,9 +32,8 @@ const fetch = (setBrands, setBranches) => {
 				}
 				return fullAddresses
 			}).flat()
-			console.log(branches)
 			setBrands(brands)
-			setBranches(branches)
+			setBrandsAndBranches(branches)
 		} catch (error) {
 			if (error.response) console.log(error.response)
 			else console.log(error)
