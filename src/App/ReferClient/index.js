@@ -69,9 +69,9 @@ const ReferClient = () => {
 			message: 'Formato inválido'
 		},{
 			name: 'cnpj',
-			validation: value => value.length === 18,
+			validation: value => value.length === 18 && !storeowners.includes(value),
 			value: cnpj,
-			message: 'Formato inválido'
+			message: 'CNPJ inválido ou já cadastrado'
 		},{
 			name: 'razao',
 			validation: value => !!value,
