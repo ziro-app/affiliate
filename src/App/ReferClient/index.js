@@ -1,14 +1,19 @@
 import React, { useState, useContext } from 'react'
+import fetch from './fetch'
 import { userContext } from '../appContext'
 import sendToBackend from './sendToBackend'
 import maskInput from '@ziro/mask-input'
 import capitalize from '@ziro/capitalize'
+import Spinner from '@bit/vitorbarbosa19.ziro.spinner'
+import Error from '@bit/vitorbarbosa19.ziro.error'
 import Form from '@bit/vitorbarbosa19.ziro.form'
 import FormInput from '@bit/vitorbarbosa19.ziro.form-input'
 import InputText from '@bit/vitorbarbosa19.ziro.input-text'
 import Footer from '@bit/vitorbarbosa19.ziro.footer'
 
 const ReferClient = () => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [isError, setIsError] = useState(false)
 	const [fname, setFname] = useState('')
 	const [lname, setLname] = useState('')
 	const [rg, setRg] = useState('')
@@ -116,6 +121,8 @@ const ReferClient = () => {
 			message: 'Formato inválido'
 		}
 	]
+	if (isLoading) return <div style={{ display: 'grid' }}><Spinner size='5rem' /></div>
+	if (isError) return <Error />
 	return (
 		<>
 			<Form

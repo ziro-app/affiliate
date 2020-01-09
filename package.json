@@ -53,6 +53,7 @@
     "@bit/vitorbarbosa19.ziro.login-form": "0.0.5",
     "@bit/vitorbarbosa19.ziro.login-page": "0.0.14",
     "@bit/vitorbarbosa19.ziro.not-found": "0.0.26",
+    "@bit/vitorbarbosa19.ziro.spinner": "0.0.11",
     "@ziro/capitalize": "^1.0.0",
     "@ziro/mask-input": "^1.0.0",
     "@ziro/router": "^1.0.2",
