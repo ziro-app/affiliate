@@ -36,11 +36,11 @@ const fetch = (setIsLoading, setIsError, setBrands, setBrandsAndBranches) => {
 			}).flat()
 			setBrands(brands)
 			setBrandsAndBranches(branches)
-			setIsLoading(false)
 		} catch (error) {
 			if (error.response) console.log(error.response)
 			else console.log(error)
 			setIsError(true)
+		} finally {
 			setIsLoading(false)
 		}
 	}

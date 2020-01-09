@@ -14,6 +14,8 @@ import Footer from '@bit/vitorbarbosa19.ziro.footer'
 const ReferClient = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [isError, setIsError] = useState(false)
+	const [storeowners, setStoreowners] = useState([])
+	// form fields
 	const [fname, setFname] = useState('')
 	const [lname, setLname] = useState('')
 	const [rg, setRg] = useState('')
@@ -33,7 +35,7 @@ const ReferClient = () => {
 	const [estado, setEstado] = useState('')
 	const [fone, setFone] = useState('')
 	const [email, setEmail] = useState('')
-	useEffect(() => fetch(setIsLoading, setIsError), [])
+	useEffect(() => fetch(setIsLoading, setIsError, setStoreowners), [])
 	const { name: affiliateName, cpf: affiliateCpf } = useContext(userContext)
 	const state = { affiliateName, affiliateCpf, fname, lname, rg, cpf, birth, insta, cnpj, ie, razao, fantasia,
 		rua, numero, complemento, bairro, cep, cidade, estado, fone, email, setFname, setLname, setRg, setCpf,
