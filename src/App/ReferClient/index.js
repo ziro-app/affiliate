@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import fetch from './fetch'
 import { userContext } from '../appContext'
 import sendToBackend from './sendToBackend'
@@ -33,6 +33,7 @@ const ReferClient = () => {
 	const [estado, setEstado] = useState('')
 	const [fone, setFone] = useState('')
 	const [email, setEmail] = useState('')
+	useEffect(() => fetch(setIsLoading, setIsError), [])
 	const { name: affiliateName, cpf: affiliateCpf } = useContext(userContext)
 	const state = { affiliateName, affiliateCpf, fname, lname, rg, cpf, birth, insta, cnpj, ie, razao, fantasia,
 		rua, numero, complemento, bairro, cep, cidade, estado, fone, email, setFname, setLname, setRg, setCpf,
