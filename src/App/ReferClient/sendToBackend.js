@@ -6,6 +6,7 @@ const sendToBackend = state => () => {
 		rua, numero, complemento, bairro, cep, cidade, estado, fone, email, setFname, setLname, setRg, setCpf,
 		setBirth, setInsta, setCnpj, setIe, setRazao, setFantasia, setRua, setNumero, setComplemento, setBairro,
 		setCep, setCidade, setEstado, setFone, setEmail } = state
+	const today = new Date()
 	const url = process.env.SHEET_URL
 	const body = {
 		apiResource: 'values',
@@ -14,9 +15,22 @@ const sendToBackend = state => () => {
 		range: 'Indicados!A1',
 		resource: {
 			values: [
-				[new Date(), affiliateName, affiliateCpf, `${fname} ${lname}`, rg, cpf, birth, insta, cnpj, ie,
+				[today, affiliateName, affiliateCpf, `${fname} ${lname}`, rg, cpf, birth, insta, cnpj, ie,
 				razao, fantasia, `${rua}, ${numero}, ${complemento}`, bairro, cep, cidade, estado, fone, email]
-			// "assessor",dateHoje,month,year,"status","motivo_inativacao","premium","cacador"
+			]
+		},
+		valueInputOption: 'raw'
+	}
+	const bodyLegacy = {
+		apiResource: 'values',
+		apiMethod: 'append',
+		spreadsheetId: process.env.SHEET_ID_REFER_LEGACY,
+		range: 'Clientes!A1',
+		resource: {
+			values: [
+				[`${fname} ${lname}`, rg, cpf, cnpj, ie, razao, fantasia, `${rua}, ${numero}, ${complemento}`,
+				bairro, cep, cidade, estado, fone, email, , today, today.getMonth() + 1, today.getFullYear(),
+				'ativo', , , affiliateName, affiliateCpf]
 			]
 		},
 		valueInputOption: 'raw'
@@ -30,6 +44,7 @@ const sendToBackend = state => () => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			await post(url, body, config)
+			await post(url, bodyLegacy, config)
 			try {
 				await db.collection('storeowners').add({
 					cadastro: new Date(), affiliateName, affiliateCpf, storeowner: `${fname} ${lname}`, rg, cpf,
