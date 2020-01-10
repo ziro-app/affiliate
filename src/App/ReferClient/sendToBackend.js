@@ -28,9 +28,13 @@ const sendToBackend = state => () => {
 		range: 'Clientes!A1',
 		resource: {
 			values: [
-				[`${fname} ${lname}`, rg, cpf, cnpj, ie, razao, fantasia, `${rua}, ${numero}, ${complemento}`,
-				bairro, cep, cidade, estado, fone, email, , today, today.getMonth() + 1, today.getFullYear(),
-				'ativo', , , affiliateName, affiliateCpf]
+				[`${fname.toUpperCase()} ${lname.toUpperCase()}`,
+				rg, cpf, cnpj, ie, razao, fantasia,
+				complemento ? `${rua}, ${numero}, ${complemento}` : `${rua}, ${numero}`,
+				bairro, `${cep.substring(0,2)}.${cep.substring(2)}`,
+				cidade, estado, fone.replace(' ',''), email, ,
+				today.toLocaleString('en-GB').replace(',',''), today.getMonth() + 1, today.getFullYear(),
+				'ativo', , , affiliateName.toUpperCase(), affiliateCpf]
 			]
 		},
 		valueInputOption: 'raw'
@@ -44,17 +48,23 @@ const sendToBackend = state => () => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			await post(url, body, config)
-			await post(url, bodyLegacy, config)
 			try {
-				await db.collection('storeowners').add({
-					cadastro: new Date(), affiliateName, affiliateCpf, storeowner: `${fname} ${lname}`, rg, cpf,
-					birth, insta, cnpj, ie, razao, fantasia, endereco: `${rua}, ${numero}, ${complemento}`,
-					bairro, cep, cidade, estado, fone, email
-				})
+				await post(url, bodyLegacy, config)
+				try {
+					await db.collection('storeowners').add({
+						cadastro: new Date(), affiliateName, affiliateCpf, storeowner: `${fname} ${lname}`, rg, cpf,
+						birth, insta, cnpj, ie, razao, fantasia, endereco: `${rua}, ${numero}, ${complemento}`,
+						bairro, cep, cidade, estado, fone, email
+					})
+				} catch (error) {
+					console.log(error)
+					if (error.response) console.log(error.response)
+					throw 'Erro ao salvar na Firestore'
+				}
 			} catch (error) {
 				console.log(error)
 				if (error.response) console.log(error.response)
-				throw 'Erro ao salvar na Firestore'
+				throw error
 			}
 			// clear all fields after submission
 			setFname('')
