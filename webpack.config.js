@@ -35,6 +35,8 @@ module.exports = (env, { mode }) => {
 			sheet_id_register_get,
 			sheet_id_refer_append,
 			sheet_id_refer_legacy,
+			cnpj_url,
+			cnpj_token,
 			continue_url,
 			mapbox_api
 		} = require('./credentials')
@@ -49,6 +51,8 @@ module.exports = (env, { mode }) => {
 					SHEET_ID_REGISTER_GET: JSON.stringify(sheet_id_register_get),
 					SHEET_ID_REFER_APPEND: JSON.stringify(sheet_id_refer_append),
 					SHEET_ID_REFER_LEGACY: JSON.stringify(sheet_id_refer_legacy),
+					CNPJ_URL: JSON.stringify(cnpj_url),
+					CNPJ_TOKEN: JSON.stringify(cnpj_token),
 					CONTINUE_URL: JSON.stringify(continue_url),
 					MAPBOX_API: JSON.stringify(mapbox_api)
 				}
@@ -80,6 +84,8 @@ module.exports = (env, { mode }) => {
 					SHEET_ID_REGISTER_GET: JSON.stringify(process.env.SHEET_ID_REGISTER_GET),
 					SHEET_ID_REFER_APPEND: JSON.stringify(process.env.SHEET_ID_REFER_APPEND),
 					SHEET_ID_REFER_LEGACY: JSON.stringify(process.env.SHEET_ID_REFER_LEGACY),
+					CNPJ_URL: JSON.stringify(process.env.CNPJ_URL),
+					CNPJ_TOKEN: JSON.stringify(process.env.CNPJ_TOKEN),
 					CONTINUE_URL: JSON.stringify(process.env.CONTINUE_URL),
 					MAPBOX_API: JSON.stringify(process.env.MAPBOX_API)
 				}
