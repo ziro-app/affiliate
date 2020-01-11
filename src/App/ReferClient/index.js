@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import fetch from './fetch'
 import { userContext } from '../appContext'
-import getCnpj from './getCnpj'
 import sendToBackend from './sendToBackend'
 import maskInput from '@ziro/mask-input'
 import capitalize from '@ziro/capitalize'
 import Spinner from '@bit/vitorbarbosa19.ziro.spinner'
 import Error from '@bit/vitorbarbosa19.ziro.error'
+import GetCnpj from './GetCnpj/index'
 import Form from '@bit/vitorbarbosa19.ziro.form'
 import FormInput from '@bit/vitorbarbosa19.ziro.form-input'
 import InputText from '@bit/vitorbarbosa19.ziro.input-text'
@@ -42,7 +42,6 @@ const ReferClient = () => {
 	const state = { affiliateName, affiliateCpf, fname, lname, rg, cpf, birth, insta, cnpj, ie, razao, fantasia,
 		rua, numero, complemento, bairro, cep, cidade, estado, fone, email, ...setState }
 	useEffect(() => fetch(setIsLoading, setIsError, setStoreowners), [])
-	useEffect(() => getCnpj(setState), [])
 	const validations = [
 		{
 			name: 'fname',
@@ -125,6 +124,7 @@ const ReferClient = () => {
 	if (isError) return <Error />
 	return (
 		<>
+			<GetCnpj cnpj={cnpj} setState={setState} storeowners={storeowners} />
 			<Form
 				validations={validations}
 				sendToBackend={sendToBackend ? sendToBackend(state) : () => null}

@@ -1,19 +1,17 @@
 import axios from 'axios'
 
-const getCnpj = (setState) => {
+const sendToBackend = state => () => {
 	const { setRazao, setFantasia, setRua, setNumero,
-		setComplemento, setBairro, setCep, setCidade, setEstado, setFone, setEmail } = setState
-	const source = axios.CancelToken.source()
-	const run = async () => {
-		const config = {
-			method: 'POST',
-			url: process.env.CNPJ_URL,
-			data: { cnpj: '28.026.371/0001-61' },
-			headers: {
-				'Authorization': process.env.CNPJ_TOKEN
-			},
-			cancelToken: source.token
+		setComplemento, setBairro, setCep, setCidade, setEstado, setFone, setEmail } = state
+	const config = {
+		method: 'POST',
+		url: process.env.CNPJ_URL,
+		data: { cnpj: '28.026.371/0001-61' },
+		headers: {
+			'Authorization': process.env.CNPJ_TOKEN
 		}
+	}
+	return new Promise(async (resolve, reject) => {
 		try {
 			const { data: { result } } = await axios(config)
 			console.log(result)
@@ -28,16 +26,12 @@ const getCnpj = (setState) => {
 			setEstado(result.uf)
 			setFone(result.telefone)
 			setEmail(result.email)
+			resolve('CNPJ válido')
 		} catch (error) {
 			if (error.response) console.log(error.response)
 			else console.log(error)
-			// setIsError(true)
-		} finally {
-			// setIsLoading(false)
 		}
-	}
-	run()
-	return () => source.cancel('Canceled fetch request. Component unmounted')
+	})
 }
 
-export default getCnpj
+export default sendToBackend
