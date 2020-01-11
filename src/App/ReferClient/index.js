@@ -36,13 +36,13 @@ const ReferClient = () => {
 	const [estado, setEstado] = useState('')
 	const [fone, setFone] = useState('')
 	const [email, setEmail] = useState('')
-	useEffect(() => fetch(setIsLoading, setIsError, setStoreowners), [])
-	useEffect(() => getCnpj(setCnpj), [])
 	const { name: affiliateName, cpf: affiliateCpf } = useContext(userContext)
+	const setState = { setFname, setLname, setRg, setCpf, setBirth, setInsta, setCnpj, setIe, setRazao, setFantasia,
+		setRua, setNumero, setComplemento, setBairro, setCep, setCidade, setEstado, setFone, setEmail }
 	const state = { affiliateName, affiliateCpf, fname, lname, rg, cpf, birth, insta, cnpj, ie, razao, fantasia,
-		rua, numero, complemento, bairro, cep, cidade, estado, fone, email, setFname, setLname, setRg, setCpf,
-		setBirth, setInsta, setCnpj, setIe, setRazao, setFantasia, setRua, setNumero, setComplemento, setBairro,
-		setCep, setCidade, setEstado, setFone, setEmail }
+		rua, numero, complemento, bairro, cep, cidade, estado, fone, email, ...setState }
+	useEffect(() => fetch(setIsLoading, setIsError, setStoreowners), [])
+	useEffect(() => getCnpj(setState), [])
 	const validations = [
 		{
 			name: 'fname',
@@ -169,7 +169,7 @@ const ReferClient = () => {
 							placeholder='01/01/1990'
 						/>
 					}/>,
-					<FormInput name='insta' label='Instagram' input={
+					<FormInput name='insta' label='Instagram da Loja' input={
 						<InputText
 							value={insta}
 							onChange={({ target: { value } }) => setInsta(value)}
@@ -235,8 +235,8 @@ const ReferClient = () => {
 					<FormInput name='cep' label='CEP' input={
 						<InputText
 							value={cep}
-							onChange={({ target: { value } }) => setCep(maskInput(value, '#####-###', true))}
-							placeholder='01123-110'
+							onChange={({ target: { value } }) => setCep(maskInput(value, '##.###-###', true))}
+							placeholder='01.123-110'
 						/>
 					}/>,
 					<FormInput name='cidade' label='Cidade' input={

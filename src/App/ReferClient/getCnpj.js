@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-const getCnpj = (setCnpj) => {
+const getCnpj = (setState) => {
+	const { setRazao, setFantasia, setRua, setNumero,
+		setComplemento, setBairro, setCep, setCidade, setEstado, setFone, setEmail } = setState
 	const source = axios.CancelToken.source()
 	const run = async () => {
 		const config = {
@@ -13,9 +15,19 @@ const getCnpj = (setCnpj) => {
 			cancelToken: source.token
 		}
 		try {
-			const data = await axios(config)
-			console.log(data)
-			// setCnpj(list)
+			const { data: { result } } = await axios(config)
+			console.log(result)
+			setRazao(result.nome)
+			setFantasia(result.fantasia)
+			setRua(result.logradouro)
+			setNumero(result.numero)
+			setComplemento(result.complemento)
+			setBairro(result.bairro)
+			setCep(result.cep)
+			setCidade(result.municipio)
+			setEstado(result.uf)
+			setFone(result.telefone)
+			setEmail(result.email)
 		} catch (error) {
 			if (error.response) console.log(error.response)
 			else console.log(error)
