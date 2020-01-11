@@ -70,11 +70,6 @@ const ReferClient = () => {
 			value: birth,
 			message: 'Formato inválido'
 		},{
-			name: 'cnpj',
-			validation: value => value.length === 18 && !storeowners.includes(value),
-			value: cnpj,
-			message: 'CNPJ inválido ou já cadastrado'
-		},{
 			name: 'razao',
 			validation: value => !!value,
 			value: razao,
@@ -174,13 +169,6 @@ const ReferClient = () => {
 							value={insta}
 							onChange={({ target: { value } }) => setInsta(value)}
 							placeholder='Ex.: ateliederoupa. Não use .com'
-						/>
-					}/>,
-					<FormInput name='cnpj' label='CNPJ' input={
-						<InputText
-							value={cnpj}
-							onChange={({ target: { value } }) => setCnpj(maskInput(value, '##.###.###/####-##', true))}
-							placeholder='00.111.222/0001-33'
 						/>
 					}/>,
 					<FormInput name='ie' label='Inscrição Estadual' input={
