@@ -1,12 +1,12 @@
 import axios from 'axios'
 
 const sendToBackend = state => () => {
-	const { setRazao, setFantasia, setRua, setNumero,
+	const { cnpj, setRazao, setFantasia, setRua, setNumero,
 		setComplemento, setBairro, setCep, setCidade, setEstado, setFone, setEmail } = state
 	const config = {
 		method: 'POST',
 		url: process.env.CNPJ_URL,
-		data: { cnpj: '28.026.371/0001-61' },
+		data: { cnpj },
 		headers: {
 			'Authorization': process.env.CNPJ_TOKEN
 		}
@@ -14,7 +14,7 @@ const sendToBackend = state => () => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const { data: { result } } = await axios(config)
-			console.log(result)
+			// fill form fields to save time for user
 			setRazao(result.nome)
 			setFantasia(result.fantasia)
 			setRua(result.logradouro)
@@ -26,10 +26,25 @@ const sendToBackend = state => () => {
 			setEstado(result.uf)
 			setFone(result.telefone)
 			setEmail(result.email)
+			// resolve
 			resolve('CNPJ válido')
 		} catch (error) {
 			if (error.response) console.log(error.response)
 			else console.log(error)
+			// clear all fields
+			setRazao('')
+			setFantasia('')
+			setRua('')
+			setNumero('')
+			setComplemento('')
+			setBairro('')
+			setCep('')
+			setCidade('')
+			setEstado('')
+			setFone('')
+			setEmail('')
+			// reject
+			reject('CNPJ inválido')
 		}
 	})
 }

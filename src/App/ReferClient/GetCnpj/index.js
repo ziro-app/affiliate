@@ -8,7 +8,8 @@ import InputText from '@bit/vitorbarbosa19.ziro.input-text'
 
 const GetCnpj = ({ cnpj, setState, storeowners }) => {
 	// useEffect(() => getCnpj(setState), [])
-	const { setCnpj, ...setRestOfState } = setState
+	const { setCnpj, ...rest } = setState
+	const state = { cnpj, ...rest }
 	const validations = [
 		{
 			name: 'cnpj',
@@ -19,8 +20,9 @@ const GetCnpj = ({ cnpj, setState, storeowners }) => {
 	]
 	return (
 		<Form
+			buttonName='Validar CNPJ'
 			validations={validations}
-			sendToBackend={sendToBackend ? sendToBackend(setRestOfState) : () => null}
+			sendToBackend={sendToBackend ? sendToBackend(state) : () => null}
 			inputs={[
 				<FormInput name='cnpj' label='CNPJ' input={
 					<InputText
