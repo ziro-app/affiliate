@@ -15,6 +15,7 @@ import Footer from '@bit/vitorbarbosa19.ziro.footer'
 const ReferClient = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [isError, setIsError] = useState(false)
+	const [cnpjValid, setCnpjValid] = useState(false)
 	const [storeowners, setStoreowners] = useState([])
 	// form fields
 	const [fname, setFname] = useState('')
@@ -40,8 +41,9 @@ const ReferClient = () => {
 	const setState = { setFname, setLname, setRg, setCpf, setBirth, setInsta, setCnpj, setIe, setRazao, setFantasia,
 		setRua, setNumero, setComplemento, setBairro, setCep, setCidade, setEstado, setFone, setEmail }
 	const state = { affiliateName, affiliateCpf, fname, lname, rg, cpf, birth, insta, cnpj, ie, razao, fantasia,
-		rua, numero, complemento, bairro, cep, cidade, estado, fone, email, ...setState }
+		rua, numero, complemento, bairro, cep, cidade, estado, fone, email, ...setState, cnpjValid }
 	useEffect(() => fetch(setIsLoading, setIsError, setStoreowners), [])
+	useEffect(() => setCnpjValid(false), [cnpj])
 	const validations = [
 		{
 			name: 'fname',
@@ -124,7 +126,7 @@ const ReferClient = () => {
 	if (isError) return <Error />
 	return (
 		<>
-			<GetCnpj cnpj={cnpj} setState={setState} storeowners={storeowners} />
+			<GetCnpj cnpj={cnpj} setState={setState} storeowners={storeowners} setCnpjValid={setCnpjValid} />
 			<Form
 				validations={validations}
 				sendToBackend={sendToBackend ? sendToBackend(state) : () => null}

@@ -5,7 +5,7 @@ const sendToBackend = state => () => {
 	const { affiliateName, affiliateCpf, fname, lname, rg, cpf, birth, insta, cnpj, ie, razao, fantasia,
 		rua, numero, complemento, bairro, cep, cidade, estado, fone, email, setFname, setLname, setRg, setCpf,
 		setBirth, setInsta, setCnpj, setIe, setRazao, setFantasia, setRua, setNumero, setComplemento, setBairro,
-		setCep, setCidade, setEstado, setFone, setEmail } = state
+		setCep, setCidade, setEstado, setFone, setEmail, cnpjValid } = state
 	const today = new Date()
 	const url = process.env.SHEET_URL
 	const body = {
@@ -46,51 +46,55 @@ const sendToBackend = state => () => {
 	}
 	return new Promise(async (resolve, reject) => {
 		try {
-			await post(url, body, config)
-			try {
-				await post(url, bodyLegacy, config)
+			if (cnpjValid) {
+				await post(url, body, config)
 				try {
-					await db.collection('storeowners').add({
-						cadastro: new Date(), affiliateName, affiliateCpf, storeowner: `${fname} ${lname}`, rg, cpf,
-						birth, insta, cnpj, ie, razao, fantasia, endereco: `${rua}, ${numero}, ${complemento}`,
-						bairro, cep, cidade, estado, fone, email
-					})
+					await post(url, bodyLegacy, config)
+					try {
+						await db.collection('storeowners').add({
+							cadastro: new Date(), affiliateName, affiliateCpf, storeowner: `${fname} ${lname}`, rg, cpf,
+							birth, insta, cnpj, ie, razao, fantasia, endereco: `${rua}, ${numero}, ${complemento}`,
+							bairro, cep, cidade, estado, fone, email
+						})
+					} catch (error) {
+						console.log(error)
+						if (error.response) console.log(error.response)
+						throw 'Erro ao salvar na Firestore'
+					}
 				} catch (error) {
 					console.log(error)
 					if (error.response) console.log(error.response)
-					throw 'Erro ao salvar na Firestore'
+					throw error
 				}
-			} catch (error) {
-				console.log(error)
-				if (error.response) console.log(error.response)
-				throw error
-			}
-			// clear all fields after submission
-			setFname('')
-			setLname('')
-			setRg('')
-			setCpf('')
-			setBirth('')
-			setInsta('')
-			setCnpj('')
-			setIe('')
-			setRazao('')
-			setFantasia('')
-			setRua('')
-			setNumero('')
-			setComplemento('')
-			setBairro('')
-			setCep('')
-			setCidade('')
-			setEstado('')
-			setFone('')
-			setEmail('')
-			// resolve Promise with message to user
-			resolve('Lojista indicado com sucesso!')
+				// clear all fields after submission
+				setFname('')
+				setLname('')
+				setRg('')
+				setCpf('')
+				setBirth('')
+				setInsta('')
+				setCnpj('')
+				setIe('')
+				setRazao('')
+				setFantasia('')
+				setRua('')
+				setNumero('')
+				setComplemento('')
+				setBairro('')
+				setCep('')
+				setCidade('')
+				setEstado('')
+				setFone('')
+				setEmail('')
+				// resolve Promise with message to user
+				resolve('Lojista indicado com sucesso!')
+			} else throw { msg: 'Cnpj não validado', customError: true }
 		} catch (error) {
-			console.log(error)
-			if (error.response) console.log(error.response)
-			reject(error)
+			if (error.customError) reject(error)
+			else {
+				console.log(error)
+				reject('Erro. Contate suporte')
+			}
 		}
 	})
 }

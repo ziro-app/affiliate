@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const sendToBackend = state => () => {
-	const { cnpj, storeowners, setRazao, setFantasia, setRua, setNumero,
+	const { cnpj, storeowners, setCnpjValid, setRazao, setFantasia, setRua, setNumero,
 		setComplemento, setBairro, setCep, setCidade, setEstado, setFone, setEmail } = state
 	const config = {
 		method: 'POST',
@@ -16,6 +16,7 @@ const sendToBackend = state => () => {
 			if (cnpj.length === 18) {
 				if (!storeowners.includes(cnpj)) {
 					const { data: { status, result } } = await axios(config)
+					console.log(result)
 					if (status) {
 						// fill form fields to save time for user
 						setRazao(result.nome)
@@ -30,6 +31,7 @@ const sendToBackend = state => () => {
 						setFone(result.telefone)
 						setEmail(result.email)
 						// resolve
+						setCnpjValid(true)
 						resolve('CNPJ válido')
 					} else throw { msg: 'CNPJ inválido na Receita', customError: true }
 				} else throw { msg: 'CNPJ já cadastrado', customError: true } 

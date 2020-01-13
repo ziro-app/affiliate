@@ -6,9 +6,9 @@ import Form from '@bit/vitorbarbosa19.ziro.form'
 import FormInput from '@bit/vitorbarbosa19.ziro.form-input'
 import InputText from '@bit/vitorbarbosa19.ziro.input-text'
 
-const GetCnpj = ({ cnpj, setState, storeowners }) => {
+const GetCnpj = ({ cnpj, setState, storeowners, setCnpjValid }) => {
 	const { setCnpj, ...rest } = setState
-	const state = { cnpj, storeowners, ...rest }
+	const state = { cnpj, storeowners, setCnpjValid, ...rest }
 	return (
 		<Form
 			buttonName='Validar CNPJ'
@@ -31,7 +31,8 @@ const GetCnpj = ({ cnpj, setState, storeowners }) => {
 GetCnpj.propTypes = {
 	cnpj: PropTypes.string.isRequired,
 	setState: PropTypes.object.isRequired,
-	storeowners: PropTypes.array.isRequired
+	storeowners: PropTypes.array.isRequired,
+	setCnpjValid: PropTypes.func.isRequired
 }
 
 export default GetCnpj
