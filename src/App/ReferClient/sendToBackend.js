@@ -93,7 +93,8 @@ const sendToBackend = state => () => {
 			if (error.customError) reject(error)
 			else {
 				console.log(error)
-				reject('Erro. Contate suporte')
+				if (error.response) console.log(error.response)
+				reject(error)
 			}
 		}
 	})
