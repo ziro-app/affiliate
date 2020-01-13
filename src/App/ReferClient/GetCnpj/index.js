@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import sendToBackend from './sendToBackend'
 import maskInput from '@ziro/mask-input'

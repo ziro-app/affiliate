@@ -16,8 +16,13 @@ const sendToBackend = state => () => {
 			if (cnpj.length === 18) {
 				if (!storeowners.includes(cnpj)) {
 					const { data: { status, result } } = await axios(config)
-					console.log(result)
 					if (status) {
+						// validations
+						const cnaes = [...result.atividades_secundarias, result.atividade_principal].map(({ code }) => code)
+						const cnaeIsValid = !!cnaes.filter(code => code === '47.81-4-00').pop()
+						if (!cnaeIsValid) throw { msg: 'CNPJ não tem CNAE 4781-4/00', customError: true }
+						const isActive = result.situacao === 'ATIVA'
+						if (!isActive) throw { msg: 'CNPJ não está ativo', customError: true }
 						// fill form fields to save time for user
 						setRazao(result.nome)
 						setFantasia(result.fantasia)
