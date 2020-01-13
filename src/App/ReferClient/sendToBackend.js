@@ -31,8 +31,7 @@ const sendToBackend = state => () => {
 				[`${fname.toUpperCase()} ${lname.toUpperCase()}`,
 				rg, cpf, cnpj, ie, razao, fantasia,
 				complemento ? `${rua}, ${numero}, ${complemento}` : `${rua}, ${numero}`,
-				bairro, `${cep.substring(0,2)}.${cep.substring(2)}`,
-				cidade, estado, fone.replace(' ',''), email, ,
+				bairro, cep, cidade, estado, fone.replace(' ',''), email, ,
 				today.toLocaleString('en-GB').replace(',',''), today.getMonth() + 1, today.getFullYear(),
 				'ativo', , , affiliateName.toUpperCase(), affiliateCpf]
 			]

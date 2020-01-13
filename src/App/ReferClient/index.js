@@ -95,7 +95,7 @@ const ReferClient = () => {
 			message: 'Campo obrigatório'
 		},{
 			name: 'cep',
-			validation: value => value.length === 9,
+			validation: value => value.length === 10,
 			value: cep,
 			message: 'Formato inválido'
 		},{
