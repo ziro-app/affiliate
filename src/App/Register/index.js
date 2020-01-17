@@ -155,7 +155,7 @@ const Register = () => {
 					<FormInput name='email' label='Email' input={
 						<InputText
 							value={email}
-							onChange={({ target: { value } }) => setEmail(value)}
+							onChange={({ target: { value } }) => setEmail(value.toLowerCase())}
 							placeholder='Para acesso ao app'
 						/>
 					}/>,
