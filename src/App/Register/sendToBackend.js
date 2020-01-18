@@ -4,7 +4,7 @@ import { post } from 'axios'
 const sendToBackend = state => () => {
 	const { brand, branch, insta, fname, lname, cpf, whats, email, pass } = state
 	const branchTrim = branch ? branch.trim() : ''
-	const instaTrim = insta ? insta.replace('@','').trim() : ''
+	const instaTrim = insta ? insta.replace('@','').trim().toLowerCase() : ''
 	const fnameTrim = fname ? fname.trim() : ''
 	const lnameTrim = lname ? lname.trim() : ''
 	const url = process.env.SHEET_URL
