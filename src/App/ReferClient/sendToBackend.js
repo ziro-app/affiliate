@@ -6,6 +6,9 @@ const sendToBackend = state => () => {
 		rua, numero, complemento, bairro, cep, cidade, estado, fone, email, setFname, setLname, setRg, setCpf,
 		setBirth, setInsta, setCnpj, setIe, setRazao, setFantasia, setRua, setNumero, setComplemento, setBairro,
 		setCep, setCidade, setEstado, setFone, setEmail, cnpjValid } = state
+	const instaTrim = insta ? insta.replace('@','').trim().toLowerCase() : ''
+	const fnameTrim = fname ? fname.trim() : ''
+	const lnameTrim = lname ? lname.trim() : ''
 	const today = new Date()
 	const url = process.env.SHEET_URL
 	const body = {
@@ -15,7 +18,7 @@ const sendToBackend = state => () => {
 		range: 'Indicados!A1',
 		resource: {
 			values: [
-				[today, affiliateName, affiliateCpf, `${fname} ${lname}`, rg, cpf, birth, insta.replace('@',''),
+				[today, affiliateName, affiliateCpf, `${fnameTrim} ${lnameTrim}`, rg, cpf, birth, instaTrim,
 				cnpj, ie, razao, fantasia, `${rua}, ${numero}, ${complemento}`, bairro, cep, cidade,
 				estado, fone, email]
 			]
@@ -29,7 +32,7 @@ const sendToBackend = state => () => {
 		range: 'Clientes!A1',
 		resource: {
 			values: [
-				[`${fname.toUpperCase()} ${lname.toUpperCase()}`,
+				[`${fnameTrim.toUpperCase()} ${lnameTrim.toUpperCase()}`,
 				rg, cpf, cnpj, ie, razao, fantasia,
 				complemento ? `${rua}, ${numero}, ${complemento}` : `${rua}, ${numero}`,
 				bairro, cep, cidade, estado, fone.replace(' ',''), email, ,
@@ -53,8 +56,8 @@ const sendToBackend = state => () => {
 					await post(url, bodyLegacy, config)
 					try {
 						await db.collection('storeowners').add({
-							cadastro: today, affiliateName, affiliateCpf, storeowner: `${fname} ${lname}`,
-							rg, cpf, birth, insta: insta.replace('@',''), cnpj, ie, razao, fantasia,
+							cadastro: today, affiliateName, affiliateCpf, storeowner: `${fnameTrim} ${lnameTrim}`,
+							rg, cpf, birth, insta: instaTrim, cnpj, ie, razao, fantasia,
 							endereco: `${rua}, ${numero}, ${complemento}`, bairro, cep, cidade,
 							estado, fone, email
 						})
