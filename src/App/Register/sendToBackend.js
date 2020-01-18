@@ -3,6 +3,10 @@ import { post } from 'axios'
 
 const sendToBackend = state => () => {
 	const { brand, branch, insta, fname, lname, cpf, whats, email, pass } = state
+	const branchTrim = branch ? branch.trim() : ''
+	const instaTrim = insta ? insta.replace('@','').trim() : ''
+	const fnameTrim = fname ? fname.trim() : ''
+	const lnameTrim = lname ? lname.trim() : ''
 	const url = process.env.SHEET_URL
 	const body = {
 		apiResource: 'values',
@@ -11,7 +15,7 @@ const sendToBackend = state => () => {
 		range: 'Afiliados!A1',
 		resource: {
 			values: [
-				[new Date(), cpf, fname, lname, whats, email, brand, branch, insta.replace('@','')]
+				[new Date(), cpf, fnameTrim, lnameTrim, whats, email, brand, branchTrim, instaTrim]
 			]
 		},
 		valueInputOption: 'raw'
@@ -31,8 +35,8 @@ const sendToBackend = state => () => {
 					await auth.currentUser.sendEmailVerification({ url: `${process.env.CONTINUE_URL}` })
 					try {
 						await db.collection('affiliates').add({
-							cadastro: new Date(), uid: user.uid,
-							brand, branch, insta: insta.replace('@',''), fname, lname, cpf, whats, email
+							cadastro: new Date(), uid: user.uid, brand, branch: branchTrim, insta: instaTrim,
+							fname: fnameTrim, lname: lnameTrim, cpf, whats, email
 						})
 						try {
 							await auth.signOut() // user needs to validate email before signing in to app
