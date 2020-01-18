@@ -9,7 +9,7 @@ const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 		} catch (error) {
 			throw error
 		}
-		resolve('ok')
+		resolve('Enviado com sucesso!')
 	} catch (error) {
 		console.log(error)
 		if (error.response) console.log(error.response)
