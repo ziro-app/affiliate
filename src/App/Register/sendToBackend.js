@@ -11,7 +11,7 @@ const sendToBackend = state => () => {
 		range: 'Afiliados!A1',
 		resource: {
 			values: [
-				[brand, branch, insta, fname, lname, cpf, whats, email]
+				[new Date(), cpf, fname, lname, whats, email, brand, branch, insta.replace('@','')]
 			]
 		},
 		valueInputOption: 'raw'
@@ -31,7 +31,8 @@ const sendToBackend = state => () => {
 					await auth.currentUser.sendEmailVerification({ url: `${process.env.CONTINUE_URL}` })
 					try {
 						await db.collection('affiliates').add({
-							uid: user.uid, brand, branch, insta, fname, lname, cpf, whats, email
+							cadastro: new Date(), uid: user.uid,
+							brand, branch, insta: insta.replace('@',''), fname, lname, cpf, whats, email
 						})
 						try {
 							await auth.signOut() // user needs to validate email before signing in to app

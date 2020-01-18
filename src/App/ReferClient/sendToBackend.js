@@ -15,8 +15,9 @@ const sendToBackend = state => () => {
 		range: 'Indicados!A1',
 		resource: {
 			values: [
-				[today, affiliateName, affiliateCpf, `${fname} ${lname}`, rg, cpf, birth, insta, cnpj, ie,
-				razao, fantasia, `${rua}, ${numero}, ${complemento}`, bairro, cep, cidade, estado, fone, email]
+				[today, affiliateName, affiliateCpf, `${fname} ${lname}`, rg, cpf, birth, insta.replace('@',''),
+				cnpj, ie, razao, fantasia, `${rua}, ${numero}, ${complemento}`, bairro, cep, cidade,
+				estado, fone, email]
 			]
 		},
 		valueInputOption: 'raw'
@@ -52,9 +53,10 @@ const sendToBackend = state => () => {
 					await post(url, bodyLegacy, config)
 					try {
 						await db.collection('storeowners').add({
-							cadastro: new Date(), affiliateName, affiliateCpf, storeowner: `${fname} ${lname}`, rg, cpf,
-							birth, insta, cnpj, ie, razao, fantasia, endereco: `${rua}, ${numero}, ${complemento}`,
-							bairro, cep, cidade, estado, fone, email
+							cadastro: today, affiliateName, affiliateCpf, storeowner: `${fname} ${lname}`,
+							rg, cpf, birth, insta: insta.replace('@',''), cnpj, ie, razao, fantasia,
+							endereco: `${rua}, ${numero}, ${complemento}`, bairro, cep, cidade,
+							estado, fone, email
 						})
 					} catch (error) {
 						console.log(error)
