@@ -6,7 +6,7 @@ const sendToBackend = state => () => {
 		try {
 			const { user: { emailVerified } } = await auth.signInWithEmailAndPassword(email, pass)
 			if (!emailVerified) {
-				auth.signOut()
+				await auth.signOut()
 				reject({ msg: 'Acesse o email de confirmação para logar', customError: true })
 			}
 		} catch (error) {
