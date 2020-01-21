@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import routeMatcher from '@ziro/router'
 import Login from './Login/index'
 import Register from './Register/index'
-import LoginTrouble from './LoginTrouble/index'
+import AccessProblems from './AccessProblems/index'
 import EmailResend from './EmailResend/index'
 import PasswordReset from './PasswordReset/index'
 import EmailConfirmation from './EmailConfirmation/index'
@@ -17,7 +17,7 @@ const Router = ({ isLogged }) => {
 	const publicRoutes = {
 		'/login': <Login />,
 		'/cadastrar': <Register />,
-		'/problemas-acesso': <LoginTrouble />,
+		'/problemas-acesso': <AccessProblems />,
 		'/reenviar-email': <EmailResend />,
 		'/resetar-senha': <PasswordReset />,
 		'/confirmar-email': <EmailConfirmation />
