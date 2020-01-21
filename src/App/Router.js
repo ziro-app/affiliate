@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import routeMatcher from '@ziro/router'
 import Login from './Login/index'
 import Register from './Register/index'
-import EmailConfirmation from './EmailConfirmation/index'
+import LoginTrouble from './LoginTrouble/index'
 import EmailResend from './EmailResend/index'
+import PasswordReset from './PasswordReset/index'
+import EmailConfirmation from './EmailConfirmation/index'
 import { Menu } from './Menu/index'
 import ReferClient from './ReferClient/index'
 import MyAccount from './MyAccount/index'
@@ -15,8 +17,10 @@ const Router = ({ isLogged }) => {
 	const publicRoutes = {
 		'/login': <Login />,
 		'/cadastrar': <Register />,
-		'/confirmar-email': <EmailConfirmation />,
-		'/reenviar-email': <EmailResend />
+		'/problemas-acesso': <LoginTrouble />,
+		'/reenviar-email': <EmailResend />,
+		'/resetar-senha': <PasswordReset />,
+		'/confirmar-email': <EmailConfirmation />
 	}
 	const privateRoutes = { // Menu can't be put inside the components because then it'll unmount on transition
 		'/indicar': <Menu title='Indicar Lojista'><ReferClient /></Menu>,
