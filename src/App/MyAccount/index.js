@@ -1,11 +1,11 @@
 import React from 'react'
+import { default as AccountOptions } from '@bit/vitorbarbosa19.ziro.my-account'
 import Footer from '@bit/vitorbarbosa19.ziro.footer'
 
 const MyAccount = () =>
 	<>
-		<label style={{ display: 'grid', justifyContent: 'center', textAlign: 'center' }}>
-			EM CONSTRUÇÃO <br /> Volte em breve
-		</label>
+		<AccountOptions />
+		<div style={{ display: 'grid', marginTop: '20px' }}></div>
 		<Footer phone='+55 (11) 3334-0920' />
 	</>
 

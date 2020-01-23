@@ -53,6 +53,7 @@
     "@bit/vitorbarbosa19.ziro.login-form": "0.0.6",
     "@bit/vitorbarbosa19.ziro.login-page": "0.0.16",
     "@bit/vitorbarbosa19.ziro.login-trouble": "0.0.2",
+    "@bit/vitorbarbosa19.ziro.my-account": "0.0.1",
     "@bit/vitorbarbosa19.ziro.not-found": "0.0.27",
     "@bit/vitorbarbosa19.ziro.resend-email": "0.0.4",
     "@bit/vitorbarbosa19.ziro.reset-pass": "0.0.1",
