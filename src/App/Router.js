@@ -9,7 +9,7 @@ import PasswordReset from './PasswordReset/index'
 import EmailConfirmation from './EmailConfirmation/index'
 import { Menu } from './Menu/index'
 import ReferClient from './ReferClient/index'
-import MyAccount from './MyAccount/index'
+import MyAccount from '@bit/vitorbarbosa19.ziro.my-account'
 import About from '@bit/vitorbarbosa19.ziro.about'
 import NotFound from '@bit/vitorbarbosa19.ziro.not-found'
 
