@@ -3,15 +3,16 @@ import { auth } from '../../Firebase/index'
 const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 	try {
 		const { email, pass } = state
-		const result = await auth.signInWithEmailAndPassword(email, pass)
-		console.log(result)
-		try {
-			await auth.currentUser.sendEmailVerification({ url: `${process.env.CONTINUE_URL}` })
-			await auth.signOut()
-		} catch (error) {
-			throw error
+		const { user } = await auth.signInWithEmailAndPassword(email, pass)
+		if (!user.emailVerified) {
+			try {
+				await auth.currentUser.sendEmailVerification({ url: `${process.env.CONTINUE_URL}` })
+				await auth.signOut()
+			} catch (error) {
+				throw error
+			}
+			resolve('Enviado com sucesso!')
 		}
-		resolve('Enviado com sucesso!')
 	} catch (error) {
 		console.log(error)
 		if (error.response) console.log(error.response)
