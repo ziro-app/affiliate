@@ -11,7 +11,7 @@ import FormInput from '@bit/vitorbarbosa19.ziro.form-input'
 import Dropdown from '@bit/vitorbarbosa19.ziro.dropdown'
 import InputText from '@bit/vitorbarbosa19.ziro.input-text'
 import { containerWithPadding } from '@ziro/theme'
-import { welcome, marker, bottom } from './styles'
+import { welcome, marker } from './styles'
 
 const Register = () => {
 	const [isLoading, setIsLoading] = useState(true)
@@ -177,7 +177,6 @@ const Register = () => {
 					}/>
 				]}
 			/>
-			<div style={bottom}></div>
 		</div>
 	)
 }

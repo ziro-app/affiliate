@@ -9,9 +9,4 @@ welcome = {
 
 marker = {
 	background: `linear-gradient(transparent 60%, rgba(255,228,0,0.75) 100%)`,
-},
-
-bottom = {
-	display: 'grid',
-	marginBottom: '60px'
 }
