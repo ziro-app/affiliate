@@ -3,7 +3,8 @@ import { auth } from '../../Firebase/index'
 const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 	try {
 		const { email, pass } = state
-		await auth.signInWithEmailAndPassword(email, pass)
+		const result = await auth.signInWithEmailAndPassword(email, pass)
+		console.log(result)
 		try {
 			await auth.currentUser.sendEmailVerification({ url: `${process.env.CONTINUE_URL}` })
 			await auth.signOut()
