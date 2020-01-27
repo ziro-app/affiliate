@@ -2,16 +2,20 @@ import { fbauth, auth } from '../../Firebase/index'
 
 const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 	try {
-		const { pass, newPass, setPass, setNewPass, setConfirmPass } = state
+		const { pass, newEmail, setPass, setNewEmail } = state
 		const user = auth.currentUser
 		const credential = fbauth.EmailAuthProvider.credential(user.email, pass)
 		await user.reauthenticateWithCredential(credential)
 		try {
-			await user.updatePassword(newPass)
-			setPass('')
-			setNewPass('')
-			setConfirmPass('')
-			resolve('Senha atualizada!')
+			await user.updateEmail(newEmail)
+			try {
+				await user.sendEmailVerification({ url: `${process.env.CONTINUE_URL}` })
+				window.alert('Email atualizado! Acesse sua caixa de entrada e refaça o login')
+				window.location.replace('/')
+				await auth.signOut()
+			} catch (error) {
+				throw error
+			}
 		} catch (error) {
 			console.log(error)
 			if (error.response) console.log(error.response)
