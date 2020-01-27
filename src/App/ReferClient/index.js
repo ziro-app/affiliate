@@ -55,22 +55,24 @@ const ReferClient = () => {
 			validation: value => !!value,
 			value: lname,
 			message: 'Campo obrigatório'
-		},{
-			name: 'rg',
-			validation: value => !!value,
-			value: rg,
-			message: 'Campo obrigatório'
-		},{
-			name: 'cpf',
-			validation: value => value.length === 14,
-			value: cpf,
-			message: 'Formato inválido'
-		},{
-			name: 'birth',
-			validation: value => value.length === 10,
-			value: birth,
-			message: 'Formato inválido'
-		},{
+		},
+		// {
+		// 	name: 'rg',
+		// 	validation: value => !!value,
+		// 	value: rg,
+		// 	message: 'Campo obrigatório'
+		// },{
+		// 	name: 'cpf',
+		// 	validation: value => value.length === 14,
+		// 	value: cpf,
+		// 	message: 'Formato inválido'
+		// },{
+		// 	name: 'birth',
+		// 	validation: value => value.length === 10,
+		// 	value: birth,
+		// 	message: 'Formato inválido'
+		// },
+		{
 			name: 'razao',
 			validation: value => !!value,
 			value: razao,

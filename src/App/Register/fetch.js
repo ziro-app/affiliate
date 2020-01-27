@@ -34,8 +34,8 @@ const fetch = (setIsLoading, setIsError, setBrands, setBrandsAndBranches) => {
 				}
 				return fullAddresses
 			}).flat()
-			setBrands(brands)
-			setBrandsAndBranches(branches)
+			setBrands(['Autônomo', ...brands])
+			setBrandsAndBranches(['Autônomo - N/A', ...branches])
 		} catch (error) {
 			if (error.response) console.log(error.response)
 			else console.log(error)
