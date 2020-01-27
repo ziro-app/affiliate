@@ -13,8 +13,7 @@ import MyAccount from '@bit/vitorbarbosa19.ziro.my-account'
 import About from '@bit/vitorbarbosa19.ziro.about'
 import UpdateEmail from './UpdateEmail/index'
 import UpdatePass from './UpdatePass/index'
-import Reauthenticate from '@bit/vitorbarbosa19.ziro.reauthenticate'
-import DeleteAccount from '@bit/vitorbarbosa19.ziro.delete-account'
+import DeleteAccount from './DeleteAccount/index'
 import NotFound from '@bit/vitorbarbosa19.ziro.not-found'
 
 const Router = ({ isLogged }) => {
@@ -32,7 +31,6 @@ const Router = ({ isLogged }) => {
 		'/ziro': <Menu title='Sobre a Ziro'><About /></Menu>,
 		'/trocar-email': <UpdateEmail />,
 		'/trocar-senha': <UpdatePass />,
-		'/reautenticar': <Reauthenticate />,
 		'/deletar-conta': <DeleteAccount />
 	}
 	const homeRoute = '/indicar'

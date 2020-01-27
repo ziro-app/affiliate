@@ -2,7 +2,7 @@ import { fbauth, auth } from '../../Firebase/index'
 
 const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 	try {
-		const { pass, newEmail, setPass, setNewEmail } = state
+		const { pass, newEmail } = state
 		const user = auth.currentUser
 		const credential = fbauth.EmailAuthProvider.credential(user.email, pass)
 		await user.reauthenticateWithCredential(credential)
