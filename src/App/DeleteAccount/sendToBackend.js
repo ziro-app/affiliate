@@ -1,4 +1,4 @@
-import { fbauth, auth } from '../../Firebase/index'
+import { fbauth, auth, db } from '../../Firebase/index'
 
 const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 	try {
@@ -7,9 +7,22 @@ const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 		const credential = fbauth.EmailAuthProvider.credential(user.email, pass)
 		await user.reauthenticateWithCredential(credential)
 		try {
-			await user.delete()
-			window.location.replace('/')
-			await auth.signOut()
+			const snapshot = await db.collection('affiliates').where('uid','==',user.uid).get()
+			if (!snapshot.empty) {
+				snapshot.forEach(async doc => {
+					const userData = await db.collection('affiliates').doc(doc.id)
+					await userData.delete()
+				})
+			} else throw 'User not found in Firestore'
+			try {
+				await user.delete()
+				window.location.replace('/')
+				await auth.signOut()
+			} catch (error) {
+				console.log(error)
+				if (error.response) console.log(error.response)
+				throw error
+			}
 		} catch (error) {
 			console.log(error)
 			if (error.response) console.log(error.response)
