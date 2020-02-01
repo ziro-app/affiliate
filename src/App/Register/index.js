@@ -171,7 +171,7 @@ const Register = () => {
 						<InputText
 							value={confirmPass}
 							onChange={({ target: { value } }) => setConfirmPass(value)}
-							placeholder='Mínimo 6 caracteres'
+							placeholder='Igual ao campo anterior'
 							type='password'
 						/>
 					}/>
