@@ -11,8 +11,12 @@ const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 			let docRefAffiliate
 			snapAffiliate.forEach(doc => docRefAffiliate = doc.ref)
 			const snapUser = await db.collection('users').where('email','==',user.email).get()
-			let docRefUser
-			snapUser.forEach(doc =>	docRefUser = doc.ref)
+			let docRefUser, userApp
+			snapUser.forEach(doc => {
+				userApp = doc.data().app
+				docRefUser = doc.ref
+			})
+			if (userApp === 'admin') throw { msg: 'Não permitido para admin', customError: true }
 			await user.updateEmail(newEmail)
 			await docRefAffiliate.update({ email: newEmail })
 			await docRefUser.update({ email: newEmail })
