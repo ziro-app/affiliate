@@ -38,6 +38,7 @@ const sendToBackend = state => () => {
 							cadastro: new Date(), uid: user.uid, brand, branch: branchTrim, insta: instaTrim,
 							fname: fnameTrim, lname: lnameTrim, cpf, whats, email
 						})
+						await db.collection('users').add({ email, app: 'affiliate' })
 						try {
 							await auth.signOut() // user needs to validate email before signing in to app
 						} catch (error) {

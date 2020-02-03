@@ -7,13 +7,21 @@ const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 		const credential = fbauth.EmailAuthProvider.credential(user.email, pass)
 		await user.reauthenticateWithCredential(credential)
 		try {
-			const snapshot = await db.collection('affiliates').where('uid','==',user.uid).get()
-			if (!snapshot.empty) {
-				snapshot.forEach(async doc => {
-					const userData = await db.collection('affiliates').doc(doc.id)
-					await userData.delete()
-				})
-			} else throw 'User not found in Firestore'
+			const snapAffiliate = await db.collection('affiliates').where('uid','==',user.uid).get()
+			let docRefAffiliate
+			snapAffiliate.forEach(doc => docRefAffiliate = doc.ref)
+			const snapUser = await db.collection('users').where('email','==',user.email).get()
+			let docRefUser, userApp
+			snapUser.forEach(doc => {
+				userApp = doc.data().app
+				docRefUser = doc.ref
+			})
+			console.log(docRefAffiliate)
+			console.log(docRefUser)
+			console.log(userApp)
+			if (userApp === 'admin') throw { msg: 'Não permitido para admin', customError: true }
+			await docRefAffiliate.delete()
+			await docRefUser.delete()
 			try {
 				await user.delete()
 				window.location.replace('/')
