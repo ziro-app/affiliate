@@ -15,7 +15,10 @@ export const App = () => {
 	useEffect(() => {
 		return auth.onAuthStateChanged(async user => {
 			if (user && user.emailVerified) setUid(user.uid)
-			else setUid('')
+			else {
+				setUid('')
+				if (auth.currentUser) auth.signOut()
+			}
 		})
 	}, [])
 	useEffect(() => {

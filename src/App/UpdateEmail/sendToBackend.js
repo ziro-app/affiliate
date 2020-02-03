@@ -1,4 +1,4 @@
-import { fbauth, auth } from '../../Firebase/index'
+import { fbauth, auth, db } from '../../Firebase/index'
 
 const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 	try {
@@ -7,7 +7,11 @@ const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 		const credential = fbauth.EmailAuthProvider.credential(user.email, pass)
 		await user.reauthenticateWithCredential(credential)
 		try {
+			const snapshot = await db.collection('users').where('email','==',user.email).get()
+			let docRef
+			snapshot.forEach(doc => docRef = doc.ref)
 			await user.updateEmail(newEmail)
+			await docRef.update({ email: newEmail })
 			try {
 				await user.sendEmailVerification({ url: `${process.env.CONTINUE_URL}` })
 				window.alert('Email atualizado! Acesse a confirmação na sua caixa de entrada e refaça o login')
@@ -17,12 +21,10 @@ const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 				throw error
 			}
 		} catch (error) {
-			console.log(error)
 			if (error.response) console.log(error.response)
 			throw error
 		}
 	} catch (error) {
-		console.log(error)
 		if (error.response) console.log(error.response)
 		if (error.code) {
 			switch (error.code) {
