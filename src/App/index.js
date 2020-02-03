@@ -29,7 +29,7 @@ export const App = () => {
 							setName(`${data.fname} ${data.lname}`)
 							setCpf(data.cpf)
 						})
-					} else setErrorLoading(true)
+					}
 				} catch (error) {
 					if (error.response) console.log(error.response)
 					else console.log(error)
