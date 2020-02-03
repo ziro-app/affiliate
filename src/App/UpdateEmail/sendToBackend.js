@@ -7,11 +7,15 @@ const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 		const credential = fbauth.EmailAuthProvider.credential(user.email, pass)
 		await user.reauthenticateWithCredential(credential)
 		try {
-			const snapshot = await db.collection('users').where('email','==',user.email).get()
-			let docRef
-			snapshot.forEach(doc => docRef = doc.ref)
+			const snapAffiliate = await db.collection('affiliates').where('uid','==',user.uid).get()
+			let docRefAffiliate
+			snapAffiliate.forEach(doc => docRefAffiliate = doc.ref)
+			const snapUser = await db.collection('users').where('email','==',user.email).get()
+			let docRefUser
+			snapUser.forEach(doc =>	docRefUser = doc.ref)
 			await user.updateEmail(newEmail)
-			await docRef.update({ email: newEmail })
+			await docRefAffiliate.update({ email: newEmail })
+			await docRefUser.update({ email: newEmail })
 			try {
 				await user.sendEmailVerification({ url: `${process.env.CONTINUE_URL}` })
 				window.alert('Email atualizado! Acesse a confirmação na sua caixa de entrada e refaça o login')

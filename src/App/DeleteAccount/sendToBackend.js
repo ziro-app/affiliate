@@ -16,9 +16,6 @@ const sendToBackend = state => () => new Promise(async (resolve, reject) => {
 				userApp = doc.data().app
 				docRefUser = doc.ref
 			})
-			console.log(docRefAffiliate)
-			console.log(docRefUser)
-			console.log(userApp)
 			if (userApp === 'admin') throw { msg: 'Não permitido para admin', customError: true }
 			await docRefAffiliate.delete()
 			await docRefUser.delete()

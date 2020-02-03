@@ -14,6 +14,7 @@ export const App = () => {
 	const [cpf, setCpf] = useState('')
 	useEffect(() => {
 		return auth.onAuthStateChanged(async user => {
+			console.log(user)
 			if (user && user.emailVerified) setUid(user.uid)
 			else setUid('')
 		})
