@@ -1,8 +1,20 @@
-import { auth } from '../../Firebase/index'
+import { db, auth } from '../../Firebase/index'
 
 const sendToBackend = state => () => {
 	const { email, pass } = state
 	return new Promise(async (resolve, reject) => {
+		try {
+			const snapshot = await db.collection('users').where('email','==',email).get()
+			if (!snapshot.empty) {
+				snapshot.forEach(async doc => {
+					const { app } = doc.data()
+					if (app === 'affiliate' || app === 'admin')
+					console.log('ok')
+				})
+			} else throw 'User not found in Firestore'
+		} catch (error) {
+			console.log(error)
+		}
 		try {
 			const { user: { emailVerified } } = await auth.signInWithEmailAndPassword(email, pass)
 			if (!emailVerified) {
