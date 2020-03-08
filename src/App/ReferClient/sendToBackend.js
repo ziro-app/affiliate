@@ -6,7 +6,7 @@ const sendToBackend = state => () => {
 		rua, numero, complemento, bairro, cep, cidade, estado, fone, email, setFname, setLname, setRg, setCpf,
 		setBirth, setInsta, setCnpj, setIe, setRazao, setFantasia, setRua, setNumero, setComplemento, setBairro,
 		setCep, setCidade, setEstado, setFone, setEmail, cnpjValid } = state
-	const instaTrim = insta ? insta.replace('@','').trim().toLowerCase() : ''
+	const instaTrim = insta ? insta.replace('@', '').trim().toLowerCase() : ''
 	const fnameTrim = fname ? fname.trim() : ''
 	const lnameTrim = lname ? lname.trim() : ''
 	const today = new Date()
@@ -15,12 +15,12 @@ const sendToBackend = state => () => {
 		apiResource: 'values',
 		apiMethod: 'append',
 		spreadsheetId: process.env.SHEET_ID_REFER_APPEND,
-		range: 'Indicados!A1',
+		range: 'Base!A1',
 		resource: {
 			values: [
-				[today, affiliateName, affiliateCpf, `${fnameTrim} ${lnameTrim}`, rg, cpf, birth, instaTrim,
-				cnpj, ie, razao, fantasia, `${rua}, ${numero}, ${complemento}`, bairro, cep, cidade,
-				estado, fone, email]
+				[today, `${fnameTrim} ${lnameTrim}`, rg, cpf, birth, instaTrim,
+					cnpj, ie, razao, fantasia, `${rua}, ${numero}, ${complemento}`, bairro, cep, cidade,
+					estado, fone, email, affiliateName, affiliateCpf, '', '']
 			]
 		},
 		valueInputOption: 'raw'
@@ -33,11 +33,11 @@ const sendToBackend = state => () => {
 		resource: {
 			values: [
 				[`${fnameTrim.toUpperCase()} ${lnameTrim.toUpperCase()}`,
-				rg, cpf, cnpj, ie, razao, fantasia,
+					rg, cpf, cnpj, ie, razao, fantasia,
 				complemento ? `${rua}, ${numero}, ${complemento}` : `${rua}, ${numero}`,
-				bairro, cep, cidade, estado, fone.replace(' ',''), email, ,
-				today.toLocaleString('en-GB').replace(',',''), today.getMonth() + 1, today.getFullYear(),
-				'ativo', , , affiliateName.toUpperCase(), affiliateCpf]
+					bairro, cep, cidade, estado, fone.replace(' ', ''), email, ,
+				today.toLocaleString('en-GB').replace(',', ''), today.getMonth() + 1, today.getFullYear(),
+					'ativo', , , affiliateName.toUpperCase(), affiliateCpf]
 			]
 		},
 		valueInputOption: 'raw'
