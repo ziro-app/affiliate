@@ -9,8 +9,8 @@ const fetch = (setIsLoading, setIsError, setStoreowners) => {
 			data: {
 				apiResource: 'values',
 				apiMethod: 'get',
-				spreadsheetId: process.env.SHEET_ID_REFER_LEGACY,
-				range: 'Clientes!D:D'
+				spreadsheetId: process.env.SHEET_ID_REFER_APPEND,
+				range: 'Base!I:I'
 			},
 			headers: {
 				'Authorization': process.env.SHEET_TOKEN,

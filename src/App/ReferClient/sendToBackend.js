@@ -1,11 +1,12 @@
 import { db } from '../../Firebase/index'
 import { post } from 'axios'
+import { dateHourFormatterUTC3 } from '../utils'
 
 const sendToBackend = state => () => {
-	const { affiliateName, affiliateCpf, fname, lname, rg, cpf, birth, insta, cnpj, ie, razao, fantasia,
-		rua, numero, complemento, bairro, cep, cidade, estado, fone, email, setFname, setLname, setRg, setCpf,
-		setBirth, setInsta, setCnpj, setIe, setRazao, setFantasia, setRua, setNumero, setComplemento, setBairro,
-		setCep, setCidade, setEstado, setFone, setEmail, cnpjValid } = state
+	const { affiliateName, affiliateCpf, advisor, salesman, fname, lname, rg, cpf, birth, insta, cnpj, ie, razao, fantasia,
+		rua, numero, complemento, bairro, cep, cidade, estado, fone, whats, email, setSearchedName, setAffiliateName, setAffiliateCpf, setFname, setLname, setRg, setCpf,
+		setAdvisor, setSalesman, setBirth, setInsta, setCnpj, setIe, setRazao, setFantasia, setRua, setNumero, setComplemento, setBairro,
+		setCep, setCidade, setEstado, setFone, setWhats, setEmail, cnpjValid } = state
 	const instaTrim = insta ? insta.replace('@', '').trim().toLowerCase() : ''
 	const fnameTrim = fname ? fname.trim() : ''
 	const lnameTrim = lname ? lname.trim() : ''
@@ -18,12 +19,12 @@ const sendToBackend = state => () => {
 		range: 'Base!A1',
 		resource: {
 			values: [
-				[today, `${fnameTrim} ${lnameTrim}`, rg, cpf, birth, instaTrim,
-					cnpj, ie, razao, fantasia, `${rua}, ${numero}, ${complemento}`, bairro, cep, cidade,
-					estado, fone, email, affiliateName, affiliateCpf, '', '']
+				[dateHourFormatterUTC3(today), `${fnameTrim} ${lnameTrim}`, whats, email.toLowerCase(), rg, cpf, birth, instaTrim,
+					cnpj, ie, razao, fantasia, complemento ? `${rua}, ${numero}, ${complemento}` : `${rua}, ${numero}`, bairro, cep, cidade,
+					estado, fone, 'NENHUM', , 'NENHUM', 'NENHUM']
 			]
 		},
-		valueInputOption: 'raw'
+		valueInputOption: 'user_entered'
 	}
 	const bodyLegacy = {
 		apiResource: 'values',
@@ -40,7 +41,7 @@ const sendToBackend = state => () => {
 					'ativo', , , affiliateName.toUpperCase(), affiliateCpf]
 			]
 		},
-		valueInputOption: 'raw'
+		valueInputOption: 'user_entered'
 	}
 	const config = {
 		headers: {
@@ -56,10 +57,29 @@ const sendToBackend = state => () => {
 					await post(url, bodyLegacy, config)
 					try {
 						await db.collection('storeowners').add({
-							cadastro: today, affiliateName, affiliateCpf, storeowner: `${fnameTrim} ${lnameTrim}`,
-							rg, cpf, birth, insta: instaTrim, cnpj, ie, razao, fantasia,
-							endereco: `${rua}, ${numero}, ${complemento}`, bairro, cep, cidade,
-							estado, fone, email
+							cadastro: today,
+							nomeAfiliado: 'NENHUM',
+							cpfAfiliado: '',
+							fname: fnameTrim,
+							lname: lnameTrim,
+							rg,
+							cpf,
+							nascimento: birth,
+							instagram: instaTrim,
+							cnpj,
+							ie,
+							razao,
+							fantasia,
+							endereco: complemento ? `${rua}, ${numero}, ${complemento}` : `${rua}, ${numero}`,
+							bairro,
+							cep,
+							cidade,
+							estado,
+							fone,
+							whatsapp: whats,
+							email: email.toLowerCase(),
+							assessor: 'NENHUM',
+							vendedor: 'NENHUM'
 						})
 					} catch (error) {
 						console.log(error)
@@ -72,6 +92,7 @@ const sendToBackend = state => () => {
 					throw error
 				}
 				// clear all fields after submission
+				setSearchedName('')
 				setFname('')
 				setLname('')
 				setRg('')
@@ -90,7 +111,12 @@ const sendToBackend = state => () => {
 				setCidade('')
 				setEstado('')
 				setFone('')
+				setWhats('')
 				setEmail('')
+				setAffiliateName('')
+				setAffiliateCpf('')
+				setAdvisor('')
+				setSalesman('')
 				// resolve Promise with message to user
 				resolve('Lojista indicado com sucesso!')
 			} else throw { msg: 'Cnpj não validado', customError: true }
