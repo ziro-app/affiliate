@@ -35,33 +35,66 @@ const sendToBackend = state => () => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			if (cnpjValid) {
+				const documents = await db.collection('storeowners').get()
+				documents.forEach(document => {
+					if (document.data().cnpj !== '')
+						cnpjInCollection.push({ [document.data().cnpj]: document.id })
+				});
 				await post(url, body, config)
 				try {
-					await db.collection('storeowners').add({
-						cadastro: today,
-						nomeAfiliado: 'NENHUM',
-						cpfAfiliado: '',
-						fname: fnameTrim,
-						lname: lnameTrim,
-						rg,
-						cpf,
-						nascimento: birth,
-						instagram: instaTrim,
-						cnpj,
-						ie,
-						razao,
-						fantasia,
-						endereco: complemento ? `${rua}, ${numero}, ${complemento}` : `${rua}, ${numero}`,
-						bairro,
-						cep,
-						cidade,
-						estado,
-						fone,
-						whatsapp: whats,
-						email: email.toLowerCase(),
-						assessor: 'NENHUM',
-						vendedor: 'NENHUM'
-					})
+					const exists = cnpjInCollection.find(data => Object.keys(data).includes(cnpj))
+					if (exists) {
+						await db.collection('storeowners').doc(exists[cnpj]).update({
+							nomeAfiliado: 'NENHUM',
+							cpfAfiliado: '',
+							fname: fnameTrim,
+							lname: lnameTrim,
+							rg,
+							cpf,
+							nascimento: birth,
+							instagram: instaTrim,
+							cnpj,
+							ie,
+							razao,
+							fantasia,
+							endereco: complemento ? `${rua}, ${numero}, ${complemento}` : `${rua}, ${numero}`,
+							bairro,
+							cep,
+							cidade,
+							estado,
+							fone,
+							whatsapp: whats,
+							email: email.toLowerCase(),
+							assessor: 'NENHUM',
+							vendedor: 'NENHUM'
+						})
+					} else {
+						await db.collection('storeowners').add({
+							cadastro: today,
+							nomeAfiliado: 'NENHUM',
+							cpfAfiliado: '',
+							fname: fnameTrim,
+							lname: lnameTrim,
+							rg,
+							cpf,
+							nascimento: birth,
+							instagram: instaTrim,
+							cnpj,
+							ie,
+							razao,
+							fantasia,
+							endereco: complemento ? `${rua}, ${numero}, ${complemento}` : `${rua}, ${numero}`,
+							bairro,
+							cep,
+							cidade,
+							estado,
+							fone,
+							whatsapp: whats,
+							email: email.toLowerCase(),
+							assessor: 'NENHUM',
+							vendedor: 'NENHUM'
+						})
+					}
 				} catch (error) {
 					console.log(error)
 					if (error.response) console.log(error.response)
