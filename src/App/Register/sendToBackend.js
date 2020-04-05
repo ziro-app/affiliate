@@ -19,7 +19,7 @@ const sendToBackend = state => () => {
 				[dateHourFormatterUTC3(new Date()), cpf, fnameTrim, lnameTrim, whats, email, brand, branchTrim, instaTrim]
 			]
 		},
-		valueInputOption: 'raw'
+		valueInputOption: 'user_entered'
 	}
 	const config = {
 		headers: {
