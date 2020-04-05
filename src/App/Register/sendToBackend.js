@@ -1,10 +1,11 @@
 import { auth, db } from '../../Firebase/index'
 import { post } from 'axios'
+import { dateHourFormatterUTC3 } from '../utils'
 
 const sendToBackend = state => () => {
 	const { brand, branch, insta, fname, lname, cpf, whats, email, pass } = state
 	const branchTrim = branch ? branch.trim() : ''
-	const instaTrim = insta ? insta.replace('@','').trim().toLowerCase() : ''
+	const instaTrim = insta ? insta.replace('@', '').trim().toLowerCase() : ''
 	const fnameTrim = fname ? fname.trim() : ''
 	const lnameTrim = lname ? lname.trim() : ''
 	const url = process.env.SHEET_URL
@@ -15,7 +16,7 @@ const sendToBackend = state => () => {
 		range: 'Afiliados!A1',
 		resource: {
 			values: [
-				[new Date(), cpf, fnameTrim, lnameTrim, whats, email, brand, branchTrim, instaTrim]
+				[dateHourFormatterUTC3(new Date()), cpf, fnameTrim, lnameTrim, whats, email, brand, branchTrim, instaTrim]
 			]
 		},
 		valueInputOption: 'raw'
