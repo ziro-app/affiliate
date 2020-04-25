@@ -12,20 +12,6 @@ const sendToBackend = state => () => {
 	const lnameTrim = lname ? lname.trim() : ''
 	const today = new Date()
 	const cnpjInCollection = []
-	const body = {
-		apiResource: 'values',
-		apiMethod: 'append',
-		spreadsheetId: process.env.SHEET_ID_REFER_APPEND,
-		range: 'Base!A1',
-		resource: {
-			values: [
-				[dateHourFormatterUTC3(today), `${fnameTrim} ${lnameTrim}`, whats, email.toLowerCase(), rg, cpf, birth, instaTrim,
-					cnpj, ie, razao, fantasia, complemento ? `${rua}, ${numero}, ${complemento}` : `${rua}, ${numero}`, bairro, cep, cidade,
-					estado, fone, appAffiliateName, appAffiliateCpf, 'NENHUM', 'NENHUM']
-			]
-		},
-		valueInputOption: 'user_entered'
-	}
 	const url = process.env.SHEET_URL
 	const config = {
 		headers: {
@@ -36,16 +22,22 @@ const sendToBackend = state => () => {
 	return (
 		new Promise(async (resolve, reject) => {
 			try {
+				let oldEmail
 				if (cnpjValid) {
 					const documents = await db.collection('storeowners').get()
 					documents.forEach(document => {
 						if (document.data().cnpj !== '')
 							cnpjInCollection.push({ [document.data().cnpj]: document.id })
 					});
-					await post(url, body, config)
+
 					try {
 						const exists = cnpjInCollection.find(data => Object.keys(data).includes(cnpj))
 						if (exists) {
+							await db.collection('storeowners').doc(exists[cnpj]).get().then(doc => {
+								if (doc.exists) {
+									oldEmail = doc.data().email
+								}
+							})
 							await db.collection('storeowners').doc(exists[cnpj]).update({
 								nomeAfiliado: appAffiliateName,
 								cpfAfiliado: appAffiliateCpf,
@@ -66,7 +58,7 @@ const sendToBackend = state => () => {
 								estado,
 								fone,
 								whatsapp: whats,
-								email: email.toLowerCase(),
+								email: oldEmail ? oldEmail : email.toLowerCase(),
 								assessor: 'NENHUM',
 								vendedor: 'NENHUM'
 							})
@@ -97,6 +89,21 @@ const sendToBackend = state => () => {
 								vendedor: 'NENHUM'
 							})
 						}
+						const body = {
+							apiResource: 'values',
+							apiMethod: 'append',
+							spreadsheetId: process.env.SHEET_ID_REFER_APPEND,
+							range: 'Base!A1',
+							resource: {
+								values: [
+									[dateHourFormatterUTC3(today), `${fnameTrim} ${lnameTrim}`, whats, oldEmail ? oldEmail : email.toLowerCase(), rg, cpf, birth, instaTrim,
+										cnpj, ie, razao, fantasia, complemento ? `${rua}, ${numero}, ${complemento}` : `${rua}, ${numero}`, bairro, cep, cidade,
+										estado, fone, appAffiliateName, appAffiliateCpf, 'NENHUM', 'NENHUM', 'NENHUM']
+								]
+							},
+							valueInputOption: 'user_entered'
+						}
+						await post(url, body, config)
 					} catch (error) {
 						console.log(error)
 						if (error.response) console.log(error.response)
